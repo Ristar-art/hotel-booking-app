@@ -9,7 +9,7 @@ function AvailableRooms() {
   const dispatch = useDispatch();
   const location = useLocation();
   const accessToken = location.state?.accessToken || '';
-  const { checkInDate, checkOutDate } = location.state;
+ // const { checkInDate, checkOutDate } = location.state;
 
   useEffect(() => {
     dispatch(fetchAvailableRooms(accessToken));
@@ -29,8 +29,8 @@ function AvailableRooms() {
                   pathname: `/room/${room.roomNumber}`,
                   state: {
                     accessToken: accessToken,
-                    checkInDate: checkInDate,       // Pass checkInDate
-                    checkOutDate: checkOutDate      // Pass checkOutDate
+                    // checkInDate: checkInDate,       // Pass checkInDate
+                    // checkOutDate: checkOutDate      // Pass checkOutDate
                   }
                 }}
               >

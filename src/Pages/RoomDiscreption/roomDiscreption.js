@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 import './RoomDescription.css';
-import { useLocation } from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
 
 const RoomDescriptionPage = () => {
-  const location = useLocation();
+  //const location = useLocation();
   const { roomNumber } = useParams();
   const [room, setRoom] = useState(null);
 
   
   // Access accessToken directly from Redux state
   const accessToken = useSelector(state => state.Login.accessToken);
-  const { checkInDate, checkOutDate } = location.state || {};
+ // const { checkInDate, checkOutDate } = location.state || {};
 
 
   useEffect(() => {
@@ -47,17 +47,17 @@ const RoomDescriptionPage = () => {
         quantity: 1,
       },
     ];
-    fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      },
-      body: JSON.stringify({ checkInDate, checkOutDate })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Room dates updated:', data.message);
+    // fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${accessToken}`
+    //   },
+    //   body: JSON.stringify({ checkInDate, checkOutDate })
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Room dates updated:', data.message);
 
    
     fetch("http://192.168.1.19:8000/create-checkout-session", {
@@ -79,10 +79,10 @@ const RoomDescriptionPage = () => {
       .catch((e) => {
         console.error(e.error);
       });
-    })
-    .catch(error => {
-      console.error('Error updating room dates:', error);
-    });
+    // })
+    // .catch(error => {
+    //   console.error('Error updating room dates:', error);
+    // });
   };
 
   if (!room) {

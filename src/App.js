@@ -13,6 +13,7 @@ import AvailableRooms from './Pages/AvaulableRoom/availableRoom';
 import AdminPanel from './Pages/Admin/adminPanel';
 import Success from './Pages/success';
 import Cancel from './Pages/cancel';
+import Gallery from './Pages/Gallery/gallery';
 
   function App() {
   return (
@@ -24,7 +25,7 @@ import Cancel from './Pages/cancel';
            <Route path = '/about' element ={<About/>}></Route>
            <Route path = '/singup' element ={<SignUp/>}></Route> 
            <Route path = '/login' element ={<Login/>}></Route>
-          
+           <Route path = '/gallery' element ={<Gallery/>}></Route>
            <Route path="/available-rooms" element={<AvailableRooms/>} />
            <Route path="/room/:roomNumber" element={<RoomDescriptionPage/>} />
            <Route path="/admin" element={<AdminPanel/>} />

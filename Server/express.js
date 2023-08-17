@@ -123,7 +123,7 @@ app.post('/api/signup', async (req, res) => {
     try {
       const room = await Rooms.findOneAndUpdate(
         { room: roomNumber },
-        { checkin: checkInDate, checkout: checkOutDate }, // Update check-in and check-out dates
+        { checkin: checkInDate, checkout: checkOutDate }, 
         { new: true } // Return the updated document
       );
   
@@ -145,17 +145,16 @@ app.post('/api/signup', async (req, res) => {
   
       const roomNumbers = req.body.items.map(item => item.price_data.product_data.roomNumber);
   
-      // Fetch room information based on room numbers from the database
       const roomInfoPromises = roomNumbers.map(async roomNumber => {
         const room = await Rooms.findOne({ room: roomNumber });
         if (!room) {
           throw new Error(`Room with number ${roomNumber} not found.`);
         }
         return {
-          priceInCents: room.rentperday * 100, // Convert to cents
+          priceInCents: room.rentperday * 100,
           roomNumber: room.room,
           roomType: room.roomType,
-          roomPhoto: room.RoomPhoto, // Add the roomPhoto attribute
+          roomPhoto: room.RoomPhoto,
         };
       });
   

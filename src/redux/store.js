@@ -4,6 +4,7 @@ import loginSlice from '../Components/Login/loginSlice';
 import roomReducer from '../Pages/Admin/roomReducer';
 import homeSlice from '../Pages/Home/homeSlice';
 import availableRoomsSlice from '../Pages/AvaulableRoom/availableRoomsSlice';
+import gallerySlice from '../Pages/Gallery/gallerySlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     rooms: roomReducer, 
     home: homeSlice,
     availableRooms: availableRoomsSlice,
+    gallery: gallerySlice
   },
 });
 
