@@ -57,6 +57,19 @@ app.post('/api/signup', async (req, res) => {
     }
   });
 
+  app.get('/api/all-rooms', async (req, res) => {
+    try {
+      const allRooms = await Rooms.find({});
+      const roomPicture = allRooms.map(room => ({       
+        roomPhoto: room.RoomPhoto // Include the room photo in the response
+      }));
+      res.json({ pictures: roomPicture });
+    } catch (error) {
+      console.error('Error fetching all rooms:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
   app.get('/api/available-rooms', async (req, res) => {
     try {
       const availableRooms = await Rooms.find({ isBooked: false }, 'room rentperday RoomPhoto');
@@ -137,8 +150,10 @@ app.post('/api/signup', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
   
   
+
   app.post("/create-checkout-session", authenticateToken, async (req, res) => {
     try {
       console.log("Request items:", req.body.items);
@@ -171,8 +186,7 @@ app.post('/api/signup', async (req, res) => {
             throw new Error(
               `Room info not found for room number ${item.price_data.product_data.roomNumber}.`
             );
-          }
-  
+          }  
           return {
             price_data: {
               currency: "zar",

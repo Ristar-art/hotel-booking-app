@@ -47,18 +47,7 @@ const RoomDescriptionPage = () => {
         quantity: 1,
       },
     ];
-    // fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${accessToken}`
-    //   },
-    //   body: JSON.stringify({ checkInDate, checkOutDate })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Room dates updated:', data.message);
-
+    
    
     fetch("http://192.168.1.19:8000/create-checkout-session", {
       method: "POST",
@@ -79,10 +68,7 @@ const RoomDescriptionPage = () => {
       .catch((e) => {
         console.error(e.error);
       });
-    // })
-    // .catch(error => {
-    //   console.error('Error updating room dates:', error);
-    // });
+    
   };
 
   if (!room) {
