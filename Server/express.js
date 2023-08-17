@@ -121,7 +121,7 @@ app.post('/api/signup', async (req, res) => {
     try {
       console.log("Request items:", req.body.items);
   
-      const roomNumbers = req.body.items.map(item => item.roomNumber);
+      const roomNumbers = req.body.items.map(item => item.price_data.product_data.roomNumber);
   
       // Fetch room information based on room numbers from the database
       const roomInfoPromises = roomNumbers.map(async roomNumber => {
@@ -133,11 +133,12 @@ app.post('/api/signup', async (req, res) => {
           priceInCents: room.rentperday * 100, // Convert to cents
           roomNumber: room.room,
           roomType: room.roomType,
+          roomPhoto: room.RoomPhoto, // Add the roomPhoto attribute
         };
       });
   
       const roomInfo = await Promise.all(roomInfoPromises);
-
+  
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
@@ -155,9 +156,9 @@ app.post('/api/signup', async (req, res) => {
             price_data: {
               currency: "zar",
               product_data: {
-                roomNumber: roomInfoItem.roomNumber,
-                roomType: roomInfoItem.roomType,                
-              }, 
+                name: roomInfoItem.roomType,
+                images: [roomInfoItem.roomPhoto],
+              },
               unit_amount: roomInfoItem.priceInCents,
             },
             quantity: item.quantity,
@@ -174,6 +175,7 @@ app.post('/api/signup', async (req, res) => {
       res.status(500).json({ error: e.message });
     }
   });
+  
   
   function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];

@@ -42,6 +42,8 @@ const RoomDescriptionPage = () => {
       },
     ];
 
+
+    console.log( { items })
     fetch("http://192.168.1.19:8000/create-checkout-session", {
       method: "POST",
       headers: {
@@ -49,6 +51,7 @@ const RoomDescriptionPage = () => {
         'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify({ items }),
+      
     })
       .then((res) => {
         if (res.ok) return res.json();
