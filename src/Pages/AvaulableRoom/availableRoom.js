@@ -1,49 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './availableRoom.css';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAvailableRooms } from './availableRoomsSlice';
 
 function AvailableRooms() {
-  const [availableRooms, setAvailableRooms] = useState([]);
+  const availableRooms = useSelector(state => state.availableRooms);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const accessToken = location.state?.accessToken || ''; // Get accessToken from location state
+  const accessToken = location.state?.accessToken || '';
+  const { checkInDate, checkOutDate } = location.state;
 
   useEffect(() => {
-    fetch('http://192.168.1.19:8000/api/available-rooms', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}` // Add the accessToken to the headers
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setAvailableRooms(data.availableRooms);
-      })
-      .catch(error => {
-        console.error('Error fetching available rooms:', error);
-      });
-  }, [accessToken]); // Include accessToken in the dependency array
+    dispatch(fetchAvailableRooms(accessToken));
+  }, [dispatch, accessToken]);
 
   return (
     <div className='container'>
       <div className="room-list">
-         {availableRooms.map((room, index) => (
+        {availableRooms.map((room, index) => (
           <div key={index} className="room-card">
-           <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
+            <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
             <div className="room-info">
-             <h3>Room {room.roomNumber}</h3>
-                <p>R{room.rentPerDay}</p>
+              <h3>Room {room.roomNumber}</h3>
+              <p>R{room.rentPerDay}</p>
               <Link
                 to={{
                   pathname: `/room/${room.roomNumber}`,
-                  state: { accessToken: accessToken } // Pass accessToken in the state
+                  state: {
+                    accessToken: accessToken,
+                    checkInDate: checkInDate,       // Pass checkInDate
+                    checkOutDate: checkOutDate      // Pass checkOutDate
+                  }
                 }}
               >
                 Description of the room
               </Link>
-             </div>
+            </div>
           </div>
-          ))}
-       </div>
+        ))}
+      </div>
     </div>
   );
 }

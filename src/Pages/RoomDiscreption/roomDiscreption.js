@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 import './RoomDescription.css';
+import { useLocation } from 'react-router-dom';
 
 const RoomDescriptionPage = () => {
+  const location = useLocation();
   const { roomNumber } = useParams();
   const [room, setRoom] = useState(null);
+
   
   // Access accessToken directly from Redux state
   const accessToken = useSelector(state => state.Login.accessToken);
+  const { checkInDate, checkOutDate } = location.state || {};
+
 
   useEffect(() => {
     fetch(`http://192.168.1.19:8000/room/${roomNumber}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}` // Use the accessToken directly here
+        'Authorization': `Bearer ${accessToken}`
       }
     })
       .then(response => response.json())
@@ -24,10 +29,11 @@ const RoomDescriptionPage = () => {
       .catch(error => {
         console.error('Error fetching room information:', error);
       });
-  }, [roomNumber, accessToken]); // Make sure to include accessToken in the dependency array
-  console.log("roomNumber:", roomNumber);
+  }, [roomNumber, accessToken]); 
+ 
+ 
   const handleBooking = () => {
-    console.log("roomNumber from room object:", room.roomNumber);
+   
     const items = [
       {
         price_data: {
@@ -36,14 +42,24 @@ const RoomDescriptionPage = () => {
             roomNumber: room.roomNumber,
             roomType: room.roomType,
           },
-          unit_amount: room.rentPerDay * 100, // Convert to cents
+          unit_amount: room.rentPerDay * 100, 
         },
         quantity: 1,
       },
     ];
+    fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({ checkInDate, checkOutDate })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Room dates updated:', data.message);
 
-
-    console.log( { items })
+   
     fetch("http://192.168.1.19:8000/create-checkout-session", {
       method: "POST",
       headers: {
@@ -63,6 +79,10 @@ const RoomDescriptionPage = () => {
       .catch((e) => {
         console.error(e.error);
       });
+    })
+    .catch(error => {
+      console.error('Error updating room dates:', error);
+    });
   };
 
   if (!room) {

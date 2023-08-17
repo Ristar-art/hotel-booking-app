@@ -2,47 +2,59 @@ import React, { useState } from 'react';
 import './Home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCheckInDate, setCheckOutDate } from './homeSlice';
 
 export const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const images = [
-    '2d207d2b(1).jpg',
-    'b3afd7e9.jpg',
-    // Add more image filenames here
-  ];
+  const images = ['2d207d2b(1).jpg', 'b3afd7e9.jpg'];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
+
+  const checkInDate = useSelector(state => state.home.checkInDate);
+  const checkOutDate = useSelector(state => state.home.checkOutDate);
+
+  const dispatch = useDispatch();
 
   const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) =>
+    setCurrentIndex(prevIndex =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
   const handleNextClick = () => {
-    setCurrentIndex((prevIndex) =>
+    setCurrentIndex(prevIndex =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const handleCheckInDateChange = (event) => {
-    setCheckInDate(event.target.value);
+  const handleCheckInDateChange = event => {
+    dispatch(setCheckInDate(event.target.value));
   };
 
-  const handleCheckOutDateChange = (event) => {
-    setCheckOutDate(event.target.value);
+  const handleCheckOutDateChange = event => {
+    dispatch(setCheckOutDate(event.target.value));
   };
 
   const handleSearchRooms = () => {
-    const { state } = location;
-    if (state && state.accessToken) {
-      const accessToken = state.accessToken;     
-      navigate('/available-rooms'); // Navigate to the desired page
+    if (checkInDate && checkOutDate) { // Only allow searching when both dates are selected
+      const { state } = location;
+      if (state && state.accessToken) {
+        const accessToken = state.accessToken;
+
+        const newState = {
+          accessToken: accessToken,
+          checkInDate: checkInDate,
+          checkOutDate: checkOutDate,
+        };
+
+        navigate('/available-rooms', { state: newState });
+      } else {
+        console.log('Access Token not found in state');
+      }
     } else {
-      console.log('Access Token not found in state');
+      console.log('Please select both check-in and check-out dates.');
     }
   };
 
@@ -50,10 +62,7 @@ export const Home = () => {
     <div className='home'>
       <h1>Home Page</h1>
       <div className='image-gallery'>
-        <img
-          src={`/images/${images[currentIndex]}`}
-          alt='Gallery'
-        />
+        <img src={`/images/${images[currentIndex]}`} alt='Gallery' />
         <div className='booking-container'>
           <div className='date-input'>
             <label className='date-label' htmlFor='checkInDate'>
@@ -80,7 +89,11 @@ export const Home = () => {
             />
           </div>
           <div className='button-container'>
-            <button className='search-button' onClick={handleSearchRooms}>
+            <button
+              className='search-button'
+              onClick={handleSearchRooms}
+              disabled={!checkInDate || !checkOutDate} // Disable button if dates are not selected
+            >
               Search Available Rooms
             </button>
           </div>

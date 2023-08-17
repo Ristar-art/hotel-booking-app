@@ -115,7 +115,29 @@ app.post('/api/signup', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
-
+ 
+  app.post('/api/update-room-dates/:roomNumber', authenticateToken, async (req, res) => {
+    const { roomNumber } = req.params;
+    const { checkInDate, checkOutDate } = req.body;
+  
+    try {
+      const room = await Rooms.findOneAndUpdate(
+        { room: roomNumber },
+        { checkin: checkInDate, checkout: checkOutDate }, // Update check-in and check-out dates
+        { new: true } // Return the updated document
+      );
+  
+      if (!room) {
+        return res.status(404).json({ message: 'Room not found' });
+      }
+  
+      res.json({ message: 'Room dates updated successfully', room });
+    } catch (error) {
+      console.error('Error updating room dates:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
   
   app.post("/create-checkout-session", authenticateToken, async (req, res) => {
     try {
