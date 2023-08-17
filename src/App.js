@@ -11,8 +11,8 @@ import RoomDescriptionPage from './Pages/RoomDiscreption/roomDiscreption';
 import { Home } from './Pages/Home/Home';
 import AvailableRooms from './Pages/AvaulableRoom/availableRoom';
 import AdminPanel from './Pages/Admin/adminPanel';
-import Cancel from './Pages/cancel/cancel';
-import Success from './Pages/success/success';
+import Success from './Pages/success';
+import Cancel from './Pages/cancel';
 
   function App() {
   return (
