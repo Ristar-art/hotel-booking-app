@@ -3,20 +3,20 @@ import './availableRoom.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAvailableRooms } from './availableRoomsSlice';
-import { setChosenRoom } from './chosenRoomSlice'; 
 
 function AvailableRooms() {
   const availableRooms = useSelector(state => state.availableRooms);
   const dispatch = useDispatch();
   const location = useLocation();
-  const accessToken = location.state?.accessToken || '';
+  const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
     dispatch(fetchAvailableRooms(accessToken));
   }, [dispatch, accessToken]);
 
   const handleRoomSelect = (roomNumber) => {
-    dispatch(setChosenRoom(roomNumber)); // Dispatch the action with the chosen room number
+    // Store the chosen room in local storage
+    localStorage.setItem('chosenRoom', roomNumber);
   };
 
   return (

@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import './success.css';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 export default function Success() {
-  const location = useLocation();
-  const accessToken = location.state?.accessToken || '';
-  const checkInDate = location.state?.checkInDate; 
-  const checkOutDate = location.state?.checkOutDate; 
-  const roomNumber = location.state?.chosenRoom;
+  const accessToken = localStorage.getItem('accessToken');
+  const roomNumber = localStorage.getItem('chosenRoom');
+  const checkInDate = localStorage.getItem('checkInDate');
+  const checkOutDate = localStorage.getItem('checkOutDate');
+  const isBooked = true;
 
   const handleChecInOut = () => {
     fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
@@ -17,7 +15,7 @@ export default function Success() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({ checkInDate, checkOutDate })
+      body: JSON.stringify({ checkInDate, checkOutDate, isBooked })
     })
     .then(response => response.json())
     .then(data => {
@@ -28,10 +26,11 @@ export default function Success() {
     });
   }
 
-  
   useEffect(() => {
-    handleChecInOut();
-  }, []);
+    if (accessToken && roomNumber && checkInDate && checkOutDate) {
+      handleChecInOut();
+    } 
+  }, [accessToken, roomNumber, checkInDate, checkOutDate]);
 
   return (
     <div className='display'>

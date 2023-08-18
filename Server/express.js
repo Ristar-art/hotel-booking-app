@@ -129,7 +129,7 @@ app.post('/api/signup', async (req, res) => {
     }
   });
  
-  app.post('/api/update-room-dates/:roomNumber', authenticateToken, async (req, res) => {
+  app.post('/api/update-room-dates/:roomNumber', async (req, res) => {
     const { roomNumber } = req.params;
     const { checkInDate, checkOutDate } = req.body;
   
@@ -139,7 +139,7 @@ app.post('/api/signup', async (req, res) => {
         { checkin: checkInDate, checkout: checkOutDate }, 
         { new: true } // Return the updated document
       );
-  
+      
       if (!room) {
         return res.status(404).json({ message: 'Room not found' });
       }

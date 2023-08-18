@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCheckInDate, setCheckOutDate } from './homeSlice';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -11,11 +9,21 @@ export const Home = () => {
   const images = ['2d207d2b(1).jpg', 'b3afd7e9.jpg'];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
 
-  const checkInDate = useSelector(state => state.home.checkInDate);
-  const checkOutDate = useSelector(state => state.home.checkOutDate);
-
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const storedCheckInDate = localStorage.getItem('checkInDate');
+    const storedCheckOutDate = localStorage.getItem('checkOutDate');
+    
+   
+    if (storedCheckInDate) {
+      setCheckInDate(storedCheckInDate);
+    }
+    if (storedCheckOutDate) {
+      setCheckOutDate(storedCheckOutDate);
+    }
+  }, []);
 
   const handlePrevClick = () => {
     setCurrentIndex(prevIndex =>
@@ -30,24 +38,24 @@ export const Home = () => {
   };
 
   const handleCheckInDateChange = event => {
-    dispatch(setCheckInDate(event.target.value));
+    const newCheckInDate = event.target.value;
+    setCheckInDate(newCheckInDate);
+    localStorage.setItem('checkInDate', newCheckInDate);
   };
 
   const handleCheckOutDateChange = event => {
-    dispatch(setCheckOutDate(event.target.value));
+    const newCheckOutDate = event.target.value;
+    setCheckOutDate(newCheckOutDate);
+    localStorage.setItem('checkOutDate', newCheckOutDate);
   };
 
   const handleSearchRooms = () => {
-    if (checkInDate && checkOutDate) { // Only allow searching when both dates are selected
+    if (checkInDate && checkOutDate) {
       const { state } = location;
       if (state && state.accessToken) {
         const accessToken = state.accessToken;
 
-        const newState = {
-          accessToken: accessToken,
-          checkInDate: checkInDate,
-          checkOutDate: checkOutDate,
-        };
+        const newState = {accessToken: accessToken, };
 
         navigate('/available-rooms', { state: newState });
       } else {

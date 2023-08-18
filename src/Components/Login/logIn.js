@@ -6,16 +6,15 @@ import { setName, setPassword, setLoading, setError, clearError, setAccessToken 
 
 function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const redirectPath = location.state?.path || '/';
+  
 
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.Login.name);
   const password = useSelector((state) => state.Login.password);
   const loading = useSelector((state) => state.Login.isLoading);
   const error = useSelector((state) => state.Login.error);
-  const accessToken = useSelector((state) => state.Login.accessToken);
-
+  
+  
   async function handleSubmit(event) {
     event.preventDefault();
     dispatch(setLoading(true));
@@ -36,7 +35,7 @@ function Login() {
 
       if (data.user) {
         alert('Login successful');
-        dispatch(setAccessToken(data.accessToken));
+        localStorage.setItem('accessToken', data.accessToken);
         navigate("/", { state: { accessToken: data.accessToken } });
       } else {
         alert('Please check your username and password');

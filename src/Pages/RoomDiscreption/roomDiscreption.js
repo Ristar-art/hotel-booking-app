@@ -10,9 +10,7 @@ const RoomDescriptionPage = () => {
   const [room, setRoom] = useState(null);
 
   
-  // Access accessToken directly from Redux state
-  const accessToken = useSelector(state => state.Login.accessToken);
- // const { checkInDate, checkOutDate } = location.state || {};
+  const accessToken = localStorage.getItem('accessToken');
 
 
   useEffect(() => {
