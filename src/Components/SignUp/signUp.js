@@ -9,6 +9,7 @@ import {
   clearError,
   clearForm,
 } from './singUpSlice';
+import Footer from '../Footer/footer';
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -106,6 +107,7 @@ function SignUp() {
           <button type="submit" disabled>Loading...</button>
         )}
       </form>
+     
     </div>
   );
 }

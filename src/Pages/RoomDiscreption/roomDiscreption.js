@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 import './RoomDescription.css';
+import Footer from '../../Components/Footer/footer';
 //import { useLocation } from 'react-router-dom';
 
 const RoomDescriptionPage = () => {
@@ -87,6 +88,10 @@ const RoomDescriptionPage = () => {
         <p>{room.description}</p>
         {/* Include other room information here */}
         <button onClick={handleBooking}>Book.</button>
+      </div>
+      <br></br>
+      <div className='footer'>
+      {<Footer/>}
       </div>
     </div>
   );

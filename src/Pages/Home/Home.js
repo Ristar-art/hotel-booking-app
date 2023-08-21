@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Footer from '../../Components/Footer/footer';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -23,7 +24,19 @@ export const Home = () => {
     if (storedCheckOutDate) {
       setCheckOutDate(storedCheckOutDate);
     }
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); 
+
+    return () => {
+      clearInterval(interval); 
+    };
+
   }, []);
+
+  
 
   const handlePrevClick = () => {
     setCurrentIndex(prevIndex =>
@@ -68,9 +81,14 @@ export const Home = () => {
 
   return (
     <div className='home'>
-      <h1>Home Page</h1>
+      <div className='image-gallery-container'>
+
       <div className='image-gallery'>
-        <img src={`/images/${images[currentIndex]}`} alt='Gallery' />
+        <img src={`/images/${images[currentIndex]}`} alt='Gallery'  />
+        <div className='abide-hotel'>
+            <h1>Abide in me hotel</h1>
+          </div>
+         
         <div className='booking-container'>
           <div className='date-input'>
             <label className='date-label' htmlFor='checkInDate'>
@@ -114,6 +132,12 @@ export const Home = () => {
             <i className='fas fa-chevron-right'></i>
           </button>
         </div>
+        
+      </div>
+      </div>
+      
+      <div className='footer-container'>
+        <Footer />
       </div>
     </div>
   );

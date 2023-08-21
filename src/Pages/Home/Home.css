@@ -1,19 +1,38 @@
 
 .home {
-  text-align: center;
-  position: relative; /* Add relative positioning */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Set the container to full viewport height */
+}
+.image-gallery-container{
+  flex: 1;
 }
 
 .image-gallery {
-  position: relative; /* Add relative positioning */
+  position: relative;
+  transition: 0.5s ease-in-out;
+
+  position: relative;
 }
 
 .image-gallery img {
   width: 100%;
-  height: 100vh; /* Set the height of the image to fill the viewport */
-  object-fit: cover; /* Scale image to cover container while maintaining aspect ratio */
+  height: 100vh; 
+  object-fit: cover;
+  flex: 1;
+  
 }
 
+.abide-hotel {
+  position: absolute;
+  top: 30%;
+  left: 30%; 
+  transform: translate(-50%, -50%);
+  /* background-color: rgba(0, 0, 0, 0.5); Add a background color to make the text more readable */
+  padding: 10px;
+  color: rgb(241, 138, 42); 
+  font-size: 24px; 
+}
 .image-nav-buttons {
   display: flex;
   justify-content: space-between;
@@ -24,7 +43,8 @@
   right: 0;
   transform: translateY(-50%);
   width: 100%;
-  z-index: 2; /* Add z-index to ensure buttons are above the image */
+  z-index: 2; 
+ 
 }
 
 .prev,
@@ -55,8 +75,8 @@ button:hover {
 
 .booking-container {
   position: absolute;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  top: 80%; 
+  left: 30%; 
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -64,10 +84,12 @@ button:hover {
   justify-content: center;
   text-align: center;
   z-index: 3;
+  background-color: rgba(240, 164, 66, 0.5);
+  border-radius: 5%;
+  padding: 10px;
 }
 
 
-/* Style for the input divs */
 .date-input {
   display: flex;
   flex-direction: column;
@@ -75,20 +97,20 @@ button:hover {
   margin-bottom: 10px;
 }
 
-/* Style for the labels */
+
 .date-label {
   margin-right: 10px;
   font-weight: bold;
 }
 
-/* Style for the date inputs */
+
 .date-picker {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-/* Style for the search button */
+
 .search-button {
   background-color: #8b8f94;
   color: white;
@@ -99,13 +121,17 @@ button:hover {
   transition: background-color 0.3s ease;
 }
 
-/* Hover effect for the search button */
+
 .search-button:hover {
   background-color: #0056b3;
 }
 
-/* Optional: Center the button horizontally */
+
 .button-container {
   display: flex;
   justify-content: center;
+}
+.footer-container {
+  
+  margin-top: auto;
 }

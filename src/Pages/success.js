@@ -6,7 +6,7 @@ export default function Success() {
   const roomNumber = localStorage.getItem('chosenRoom');
   const checkInDate = localStorage.getItem('checkInDate');
   const checkOutDate = localStorage.getItem('checkOutDate');
-  const isBooked = true;
+  const isbooked = true;
 
   const handleChecInOut = () => {
     fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
@@ -15,7 +15,7 @@ export default function Success() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({ checkInDate, checkOutDate, isBooked })
+      body: JSON.stringify({ checkInDate, checkOutDate, isbooked })
     })
     .then(response => response.json())
     .then(data => {

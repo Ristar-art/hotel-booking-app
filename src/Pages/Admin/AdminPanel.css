@@ -1,27 +1,29 @@
 /* AdminPanel.css */
 
 .admin-panel-container {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   
+  justify-content: center;
+  align-items: center;    
+  background-color: #007bff;
+  flex-direction: column;  
+  text-align: center;  
    
   }
   
-  .admin-panel-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
   
   .form-group {
-    margin-bottom: 15px;
+    align-items: center; 
+    margin-bottom: 15px;   
+    justify-content: center;    
+    background-color: #bfcedf;      
+    top: 20%; 
+    left: 20%;   
     display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
- 
+    flex-direction: column;  
+    text-align: center;
+    position: absolute;
+    border-radius: 5%;
+    
   }
   
   .form-group label {
@@ -31,20 +33,21 @@
   }
   
   .form-group input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
   .submit-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #86787b;
+    color: rgb(17, 17, 17);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 15px; /* Add margin to separate the button from other inputs */
   }
   
   .submit-button:hover {

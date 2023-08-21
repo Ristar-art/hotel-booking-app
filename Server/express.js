@@ -16,7 +16,7 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
 const UserData = require('./models/user.models');
 const Rooms = require('./models/hotel.models')
-const hotelGallery = require('./models/gallery.models')
+
 
 app.post('/api/signup', async (req, res) => {
     try {
@@ -131,12 +131,12 @@ app.post('/api/signup', async (req, res) => {
  
   app.post('/api/update-room-dates/:roomNumber', async (req, res) => {
     const { roomNumber } = req.params;
-    const { checkInDate, checkOutDate } = req.body;
+    const { checkInDate, checkOutDate, isbooked } = req.body;
   
     try {
       const room = await Rooms.findOneAndUpdate(
         { room: roomNumber },
-        { checkin: checkInDate, checkout: checkOutDate }, 
+        { checkin: checkInDate, checkout: checkOutDate, isBooked: isbooked }, 
         { new: true } // Return the updated document
       );
       

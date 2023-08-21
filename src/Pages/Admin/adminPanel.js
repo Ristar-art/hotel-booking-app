@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNewRoom } from './roomReducer'; // Update the path based on your file structure
+import './AdminPanel.css'
 
 function AdminPanel() {
     const dispatch = useDispatch();
@@ -33,10 +34,11 @@ function AdminPanel() {
     };
   
     return (
-      <div className="admin-panel-container">
-        <h2>Admin Panel - Add New Room</h2>
+
+      <div>
+        <div className="admin-panel-container">
         
-        <div className="form-group">
+          <div className="form-group">
           <label>Room Number:</label>
           <input
             type="number"
@@ -67,10 +69,17 @@ function AdminPanel() {
             value={newRoom.discription}
             onChange={e => setNewRoom({ ...newRoom, discription: e.target.value })}
           />
+           <button className="submit-button" onClick={handleAddRoom}>Add Room</button>
         </div>
-        {/* Other input fields for new room */}
-        <button className="submit-button" onClick={handleAddRoom}>Add Room</button>
+       <div className='booked rooms'>
+
+        
+
+       </div>
+       
       </div>
+      </div>
+      
     );
   }
   

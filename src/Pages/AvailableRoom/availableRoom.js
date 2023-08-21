@@ -3,6 +3,7 @@ import './availableRoom.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAvailableRooms } from './availableRoomsSlice';
+import Footer from '../../Components/Footer/footer';
 
 function AvailableRooms() {
   const availableRooms = useSelector(state => state.availableRooms);
@@ -42,6 +43,9 @@ function AvailableRooms() {
             </div>
           </div>
         ))}
+      </div>
+      <div className='footer'>
+      {<Footer/>}
       </div>
     </div>
   );
