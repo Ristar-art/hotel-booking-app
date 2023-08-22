@@ -44,7 +44,7 @@ const RoomDescriptionPage = () => {
             roomNumber: room.roomNumber,
             roomType: room.roomType,
           },
-          unit_amount: room.rentPerDay * numberOfDays * 100 , 
+          unit_amount: room.rentPerDay * 100 , 
         },
         quantity: 1,
       },

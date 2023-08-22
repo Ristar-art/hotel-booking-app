@@ -31,5 +31,15 @@ ul {
     margin-right: 0;
   }
   .nav-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(80, 76, 76, 0.8);
+  }
+
+  .navbar-links button{
+   position: absolute;
+    top: 25%;
+    left: 90%;
+    
+    background-color: #eb6767;
+    padding: 10px;
+    z-index: 2;
   }
