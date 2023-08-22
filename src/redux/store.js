@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import signUpReducer from '../Components/SignUp/singUpSlice'; 
-import loginSlice from '../Components/Login/loginSlice';
+import loginSlice from '../Components/Loginpages/loginSlice';
 import roomReducer from '../Pages/Admin/roomReducer';
 import availableRoomsSlice from '../Pages/AvailableRoom/availableRoomsSlice';
 import gallerySlice from '../Pages/Gallery/gallerySlice';
