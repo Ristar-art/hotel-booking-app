@@ -39,7 +39,7 @@ function SignUp() {
       dispatch(setLoading(true));
 
       try {
-        const response = await fetch('http://localhost:8000/api/signup', {
+        const response = await fetch('https://booking-hotel-25ea1.web.app/api/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

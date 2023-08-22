@@ -9,7 +9,7 @@ export default function Success() {
   const isbooked = true;
 
   const handleChecInOut = () => {
-    fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+    fetch(`https://booking-hotel-25ea1.web.app/api/update-room-dates/${roomNumber}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
