@@ -4,6 +4,7 @@ import loginSlice from '../Components/Login/loginSlice';
 import roomReducer from '../Pages/Admin/roomReducer';
 import availableRoomsSlice from '../Pages/AvailableRoom/availableRoomsSlice';
 import gallerySlice from '../Pages/Gallery/gallerySlice';
+import bookedRoomsSlice from '../Pages/Admin/bookedRoomsSlice';
 
 
 
@@ -13,7 +14,8 @@ const store = configureStore({
     Login: loginSlice, 
     rooms: roomReducer,     
     availableRooms: availableRoomsSlice,
-    gallery: gallerySlice,    
+    gallery: gallerySlice,
+    bookedRooms: bookedRoomsSlice,    
   },
 });
 

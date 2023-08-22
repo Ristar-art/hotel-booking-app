@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addNewRoom } from './roomReducer'; // Update the path based on your file structure
+import React, { useState,  useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewRoom } from './roomReducer'; 
 import './AdminPanel.css'
+import { fetchBookedRooms } from './bookedRoomsSlice';
+
+
 
 function AdminPanel() {
     const dispatch = useDispatch();
+    const bookedRooms = useSelector(state => state.bookedRooms); 
+    const accessToken = localStorage.getItem('accessToken');
     
+    useEffect(() => {
+      dispatch(fetchBookedRooms(accessToken));
+    }, [dispatch, accessToken]);
+  
+ 
+  
     const [newRoom, setNewRoom] = useState({
       room: 0,
       roomType: '',
@@ -71,8 +82,16 @@ function AdminPanel() {
           />
            <button className="submit-button" onClick={handleAddRoom}>Add Room</button>
         </div>
-       <div className='booked rooms'>
-
+       <div className='booked-rooms'>
+       {bookedRooms.map((room, index) => (
+          <div key={index} className="room-card">
+            <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
+             <div className="room-info">
+              <h3>Room {room.roomNumber}</h3>
+              <p>R{room.rentPerDay}</p>              
+            </div>
+          </div>
+        ))}
         
 
        </div>

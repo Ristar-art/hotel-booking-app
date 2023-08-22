@@ -70,6 +70,26 @@ app.post('/api/signup', async (req, res) => {
     }
   });
   
+  app.get('/api/booked-rooms', async (req, res) => {
+    try {
+      const bookedRooms = await Rooms.find({ isBooked: true }, 'room rentperday RoomPhoto');
+      
+      const roomInfo = bookedRooms.map(room => ({ 
+        roomNumber: room.room,
+        rentPerDay: room.rentperday,
+        roomPhoto: room.RoomPhoto // Include the room photo in the response
+      }));
+      
+      res.json({
+        message: 'Booked rooms',
+        bookedRooms: roomInfo
+      });
+    } catch (error) {
+      console.error('Error fetching booked rooms:', error); 
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
   app.get('/api/available-rooms', async (req, res) => {
     try {
       const availableRooms = await Rooms.find({ isBooked: false }, 'room rentperday RoomPhoto');
