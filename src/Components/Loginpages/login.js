@@ -20,7 +20,7 @@ export function Login() {
     dispatch(setLoading(true));
 
     try {
-      const response = await fetch('https://booking-hotel-25ea1.web.app/api/login', {
+      const response = await fetch('http://192.168.1.19:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

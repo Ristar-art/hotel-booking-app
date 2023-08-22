@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchAvailableRooms = createAsyncThunk(
   'availableRooms/fetchAvailableRooms',
   async (accessToken) => {
-    const response = await fetch('https://booking-hotel-25ea1.web.app/api/available-rooms', {
+    const response = await fetch('http://192.168.1.19:8000/api/available-rooms', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
