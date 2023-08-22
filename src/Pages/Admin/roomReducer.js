@@ -2,7 +2,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Create a thunk for adding a new room
+
 export const addNewRoom = createAsyncThunk(
   'rooms/addNewRoom',
   async (newRoomData) => {

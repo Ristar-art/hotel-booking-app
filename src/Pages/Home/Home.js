@@ -118,7 +118,7 @@ export const Home = () => {
             <button
               className='search-button'
               onClick={handleSearchRooms}
-              disabled={!checkInDate || !checkOutDate} // Disable button if dates are not selected
+              disabled={!checkInDate || !checkOutDate} 
             >
               Search Available Rooms
             </button>

@@ -37,7 +37,7 @@ function AdminPanel() {
             RoomPhoto: '',
             discription: '',
             isBooked: false,
-          }); // Reset the form fields
+          }); 
         })
         .catch(error => {
           console.error('Error adding room:', error);

@@ -1,4 +1,4 @@
-/* AdminPanel.css */
+
 
 .admin-panel-container {
    
@@ -47,7 +47,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 15px; /* Add margin to separate the button from other inputs */
+    margin-top: 15px; 
   }
   
   .submit-button:hover {

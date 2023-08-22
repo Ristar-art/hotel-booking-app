@@ -62,7 +62,7 @@ const RoomDescriptionPage = () => {
         return res.json().then((json) => Promise.reject(json));
       })
       .then(({ url }) => {
-        window.location.href = url; // Redirect to the checkout URL
+        window.location.href = url; 
       })
       .catch((e) => {
         console.error(e.error);
@@ -78,7 +78,7 @@ const RoomDescriptionPage = () => {
     <div className="room-description-page">
       <img
         src={room.roomPhoto}      
-        alt={room.roomType} // Add alt text for accessibility
+        alt={room.roomType} 
         className="room-image"
       />
       <br></br>
@@ -86,7 +86,7 @@ const RoomDescriptionPage = () => {
         <h3>{room.roomType}</h3>
         <br></br>
         <p>{room.description}</p>
-        {/* Include other room information here */}
+        
         <button onClick={handleBooking}>Book.</button>
       </div>
       <br></br>

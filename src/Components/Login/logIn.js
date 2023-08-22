@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './login.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setName, setPassword, setLoading, setError, clearError, setAccessToken } from './loginSlice'; // Import actions from the slice
+import { setName, setPassword, setLoading, setError, clearError, setAccessToken } from './loginSlice'; 
 
 function Login() {
   const navigate = useNavigate();

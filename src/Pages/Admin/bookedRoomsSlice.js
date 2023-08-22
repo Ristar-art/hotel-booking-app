@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Async thunk to fetch booked rooms
+
 export const fetchBookedRooms = createAsyncThunk(
   'bookedRooms/fetchBookedRooms',
   async (accessToken) => {
@@ -15,7 +15,6 @@ export const fetchBookedRooms = createAsyncThunk(
   }
 );
 
-// Create the slice
 const bookedRoomsSlice = createSlice({
   name: 'bookedRooms',
   initialState: [],

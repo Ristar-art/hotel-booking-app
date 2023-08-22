@@ -10,19 +10,19 @@ export const fetchAllRooms = createAsyncThunk(
       }
     });
     const data = await response.json();   
-    return data.pictures; // Update to match the response structure
+    return data.pictures; 
     
   }
 );
 const gallerySlice = createSlice({
   name: 'gallery',
   initialState: {
-    pictures: [], // Initialize with an empty array
+    pictures: [], 
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAllRooms.fulfilled, (state, action) => {
-      state.pictures = action.payload; // Assign the payload to the pictures property
+      state.pictures = action.payload;
     });
   },
 });

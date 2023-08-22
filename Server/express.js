@@ -61,7 +61,7 @@ app.post('/api/signup', async (req, res) => {
     try {
       const allRooms = await Rooms.find({});
       const roomPicture = allRooms.map(room => ({       
-        roomPhoto: room.RoomPhoto // Include the room photo in the response
+        roomPhoto: room.RoomPhoto
       }));
       res.json({ pictures: roomPicture });
     } catch (error) {
@@ -77,7 +77,7 @@ app.post('/api/signup', async (req, res) => {
       const roomInfo = bookedRooms.map(room => ({ 
         roomNumber: room.room,
         rentPerDay: room.rentperday,
-        roomPhoto: room.RoomPhoto // Include the room photo in the response
+        roomPhoto: room.RoomPhoto 
       }));
       
       res.json({
@@ -97,7 +97,7 @@ app.post('/api/signup', async (req, res) => {
       const roomInfo = availableRooms.map(room => ({
         roomNumber: room.room,
         rentPerDay: room.rentperday,
-        roomPhoto: room.RoomPhoto // Include the room photo in the response
+        roomPhoto: room.RoomPhoto 
       }));
       
       res.json({
@@ -140,7 +140,7 @@ app.post('/api/signup', async (req, res) => {
   
   app.post('/api/rooms', async (req, res) => {
     try {
-      const newRoom = req.body; // Assuming the request body contains the new room data
+      const newRoom = req.body;
       const createdRoom = await Rooms.create(newRoom);
       res.status(201).json(createdRoom);
     } catch (error) {
@@ -157,7 +157,7 @@ app.post('/api/signup', async (req, res) => {
       const room = await Rooms.findOneAndUpdate(
         { room: roomNumber },
         { checkin: checkInDate, checkout: checkOutDate, isBooked: isbooked }, 
-        { new: true } // Return the updated document
+        { new: true } 
       );
       
       if (!room) {

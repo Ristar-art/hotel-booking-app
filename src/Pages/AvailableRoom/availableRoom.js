@@ -16,7 +16,7 @@ function AvailableRooms() {
   }, [dispatch, accessToken]);
 
   const handleRoomSelect = (roomNumber) => {
-    // Store the chosen room in local storage
+    
     localStorage.setItem('chosenRoom', roomNumber);
   };
 
@@ -36,7 +36,7 @@ function AvailableRooms() {
                     accessToken: accessToken,
                   }
                 }}
-                onClick={() => handleRoomSelect(room.roomNumber)} // Call the function to save the chosen room
+                onClick={() => handleRoomSelect(room.roomNumber)}
               >
                 Description of the room
               </Link>
