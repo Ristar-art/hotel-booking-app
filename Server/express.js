@@ -179,6 +179,7 @@ app.post('/api/signup', async (req, res) => {
       console.log("Request items:", req.body.items);
   
       const roomNumbers = req.body.items.map(item => item.price_data.product_data.roomNumber);
+      
   
       const roomInfoPromises = roomNumbers.map(async roomNumber => {
         const room = await Rooms.findOne({ room: roomNumber });

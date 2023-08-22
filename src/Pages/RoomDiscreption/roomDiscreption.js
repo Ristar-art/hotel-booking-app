@@ -12,7 +12,10 @@ const RoomDescriptionPage = () => {
 
   
   const accessToken = localStorage.getItem('accessToken');
-
+  const checkInDate = localStorage.getItem('checkInDate');
+  const checkOutDate = localStorage.getItem('checkOutDate');
+  const timeDifference = checkOutDate - checkInDate;
+  const numberOfDays = timeDifference / (1000 * 3600 * 24);
 
   useEffect(() => {
     fetch(`http://192.168.1.19:8000/room/${roomNumber}`, {
@@ -41,7 +44,7 @@ const RoomDescriptionPage = () => {
             roomNumber: room.roomNumber,
             roomType: room.roomType,
           },
-          unit_amount: room.rentPerDay * 100, 
+          unit_amount: room.rentPerDay * numberOfDays * 100 , 
         },
         quantity: 1,
       },
