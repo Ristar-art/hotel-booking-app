@@ -83,6 +83,7 @@ function AdminPanel() {
            <button className="submit-button" onClick={handleAddRoom}>Add Room</button>
         </div>
        <div className='booked-rooms'>
+        <h1>Booked Rooms</h1>
        {bookedRooms.map((room, index) => (
           <div key={index} className="room-card">
             <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
