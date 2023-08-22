@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPassword, setLoading, setError, clearError, setAccessToken } from './loginSlice'; 
 
-function Login() {
+export function Login() {
   const navigate = useNavigate();
   
 
@@ -77,5 +77,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

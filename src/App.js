@@ -5,8 +5,6 @@ import { Navbar } from './Components/Navbar/Navbar';
 
 import { About } from './Pages/About/About';
 import SignUp from './Components/SignUp/signUp';
-import Login from './Components/Login/logIn';
-
 import RoomDescriptionPage from './Pages/RoomDiscreption/roomDiscreption';
 import { Home } from './Pages/Home/Home';
 import AdminPanel from './Pages/Admin/adminPanel';
@@ -14,6 +12,7 @@ import Success from './Pages/success';
 import Cancel from './Pages/cancel';
 import Gallery from './Pages/Gallery/gallery';
 import AvailableRooms from './Pages/AvailableRoom/availableRoom';
+import Login from './Components/Login/login';
 
   function App() {
   return (

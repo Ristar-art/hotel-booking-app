@@ -21,7 +21,7 @@ const Footer = () => {
       resources: [
         { name: 'SignUp', link: '/signup' },
         { name: 'Login', link: '/login' },
-        { name: 'Logout', link: '/item5' },
+        
       ],
     },
     {
