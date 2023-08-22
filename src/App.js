@@ -12,7 +12,7 @@ import Success from './Pages/success';
 import Cancel from './Pages/cancel';
 import Gallery from './Pages/Gallery/gallery';
 import AvailableRooms from './Pages/AvailableRoom/availableRoom';
-import Login from './Components/Login/login';
+import Login from './Components/Loginpages/login';
 
   function App() {
   return (
