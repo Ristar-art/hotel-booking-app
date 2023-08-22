@@ -5,6 +5,7 @@ import './Navbar.css';
 export const useLogout = () => {
   const logout = () => {    
     localStorage.removeItem('accessToken');
+    window.location.href = '/';
   }  
   return logout;
 }
@@ -38,7 +39,7 @@ export const Navbar = ({ user }) => {
           <Link to="/admin">Admin Panel</Link>
         </li>
         <li>
-          <button onClick={() => { handleLogout(); window.location.href = '/' }}>Log out </button>
+          <button onClick={() => { handleLogout();}}>Log out </button>
         </li>
       </ul>
     </nav>
