@@ -149,7 +149,7 @@ app.post('/api/signup', async (req, res) => {
     }
   });
  
-  app.post('/api/update-room-dates/:roomNumber', async (req, res) => {
+  app.put('/api/update-room-dates/:roomNumber', async (req, res) => {
     const { roomNumber } = req.params;
     const { checkInDate, checkOutDate, isbooked } = req.body;
   
@@ -190,7 +190,8 @@ app.post('/api/signup', async (req, res) => {
           priceInCents: room.rentperday * 100,
           roomNumber: room.room,
           roomType: room.roomType,
-          roomPhoto: room.RoomPhoto,
+          price: room.price
+          
         };
       });
   
@@ -213,7 +214,7 @@ app.post('/api/signup', async (req, res) => {
               currency: "zar",
               product_data: {
                 name: roomInfoItem.roomType,
-                images: [roomInfoItem.roomPhoto],
+                //images: [roomInfoItem.roomPhoto],
               },
               unit_amount: roomInfoItem.priceInCents,
             },

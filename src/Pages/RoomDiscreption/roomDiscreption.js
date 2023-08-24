@@ -11,11 +11,12 @@ const RoomDescriptionPage = () => {
   const [room, setRoom] = useState(null);
 
   
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem('accessToken'); 
   const checkInDate = localStorage.getItem('checkInDate');
   const checkOutDate = localStorage.getItem('checkOutDate');
-  const timeDifference = checkOutDate - checkInDate;
-  const numberOfDays = timeDifference / (1000 * 3600 * 24);
+  const isbooked = true;
+  const timeDifference = localStorage.getItem('timeDifference');
+  const totalPrice = localStorage.getItem('totalPrice')
 
   useEffect(() => {
     fetch(`http://192.168.1.19:8000/room/${roomNumber}`, {
@@ -35,6 +36,8 @@ const RoomDescriptionPage = () => {
  
  
   const handleBooking = () => {
+
+    
    
     const items = [
       {
@@ -44,11 +47,28 @@ const RoomDescriptionPage = () => {
             roomNumber: room.roomNumber,
             roomType: room.roomType,
           },
-          unit_amount: room.rentPerDay * 100 , 
+          unit_amount: totalPrice, 
         },
         quantity: 1,
       },
     ];
+
+    fetch(`http://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({ checkInDate, checkOutDate, isbooked, totalPrice, timeDifference })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Room dates updated:', data.message);
+    })
+    .catch(error => {
+      console.error('Error updating room dates:', error);
+    });
+  
     
    
     fetch("http://192.168.1.19:8000/create-checkout-session", {

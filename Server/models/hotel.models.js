@@ -8,7 +8,9 @@ const HotelBookingSchema = new mongoose.Schema({
   rentperday: { type: Number, required: true },
   RoomPhoto: { type: String, required: true },
   discription: { type: String, required: true },
-  isBooked: { type: Boolean }
+  isBooked: { type: Boolean },
+  price:{type: Number, default:null},
+  numberOfDays: {type:Number, default:null}
 },
 { collection: 'rooms' }
 );
