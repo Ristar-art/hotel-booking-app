@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const HotelBookingSchema = new mongoose.Schema({
-  room: { type: Number, required: true },
+  room: { type: Number, required: true, unique: true },
   roomType: { type: String, required: true },
   checkin: { type: Date, default: null },  
   checkout: { type: Date, default: null },  

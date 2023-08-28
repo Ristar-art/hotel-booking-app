@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  name: '',
+  email: '',
   password: '',
   isLoading: false,
   error: null,
-  accessToken: '',
+  accessToken: null, 
 };
 
 const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    setName: (state, action) => {
-      state.name = action.payload;
+    setEmail: (state, action) => {
+      state.email = action.payload;
     },
     setPassword: (state, action) => {
       state.password = action.payload;
@@ -34,7 +34,7 @@ const loginSlice = createSlice({
 });
 
 export const {
-  setName,
+  setEmail,
   setPassword,
   setLoading,
   setError,

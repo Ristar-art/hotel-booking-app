@@ -1,21 +1,30 @@
-import React from 'react';
-import './signUp.css'
+import React, { useState } from 'react';
+import './signUp.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { 
+import {
   setLoading,
   setError,
   clearError,
   clearForm,
 } from './singUpSlice';
-import Footer from '../Footer/footer';
+
+import {  createUserWithEmailAndPassword ,auth } from '../../firebase';
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { isLoading,} = useSelector(
+  const { isLoading } = useSelector(
     (state) => state.signUp
   );
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordRepeat: '',
+  });
+  const [user, setUser] = useState(null);
+
 
   const validationSchema = yup.object().shape({
     name: yup.string().required('Username is required'),
@@ -27,78 +36,91 @@ function SignUp() {
       .required('Confirm password is required'),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      passwordRepeat: '',
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      dispatch(setLoading(true));
 
-      try {
-        const response = await fetch('http://localhost:8000/api/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values), // Pass the entire values object
-        });
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(setLoading(true));
 
-        if (response.status === 200) {
-          const data = await response.json();
-          console.log(data);
-          dispatch(setLoading(false));
-          dispatch(clearError());
-          dispatch(clearForm());
-        } else {
-          const errorData = await response.json();
-          dispatch(setLoading(false));
-          dispatch(setError(errorData.error)); // Use the correct error property from the API response
-        }
-      } catch (error) {
-        console.error('Error during fetch:', error);
+    try {
+      console.log('auth: ', auth)
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      
+
+      const response = await fetch('http://192.168.1.19:8000/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: userCredential.user.uid,
+          ...formData,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('User registered successfully');
         dispatch(setLoading(false));
-        dispatch(setError('An error occurred while registering. Please try again later.'));
+        dispatch(clearError());
+        dispatch(clearForm());
+      } else {
+        const errorData = await response.json();
+        dispatch(setLoading(false));
+        dispatch(setError(errorData.error));
       }
-    },
-  });
+    } catch (error) {
+      console.error('Error during registration:', error);
+      dispatch(setLoading(false));
+      dispatch(
+        setError('An error occurred while registering. Please try again later.')
+      );
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="signUp-body">
-     
-      <form onSubmit={formik.handleSubmit}>
-     
+      <form onSubmit={handleSubmit}>
         <input
           placeholder="Username"
           name="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
+          value={formData.name}
+          onChange={handleChange}
         />
         <br />
         <input
           placeholder="Email"
           name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
+          value={formData.email}
+          onChange={handleChange}
         />
         <br />
         <input
           placeholder="Password"
           name="password"
           type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
+          value={formData.password}
+          onChange={handleChange}
         />
         <br />
         <input
           placeholder="Repeat Password"
           name="passwordRepeat"
           type="password"
-          value={formik.values.passwordRepeat}
-          onChange={formik.handleChange}
+          value={formData.passwordRepeat}
+          onChange={handleChange}
         />
         <br />
         {!isLoading ? (
@@ -107,7 +129,6 @@ function SignUp() {
           <button type="submit" disabled>Loading...</button>
         )}
       </form>
-     
     </div>
   );
 }

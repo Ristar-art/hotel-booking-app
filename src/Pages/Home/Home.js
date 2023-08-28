@@ -12,31 +12,32 @@ export const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   useEffect(() => {
+    
+    const userAccessToken = localStorage.getItem('accessToken');
+    setIsLoggedIn(!!userAccessToken);
+
     const storedCheckInDate = localStorage.getItem('checkInDate');
     const storedCheckOutDate = localStorage.getItem('checkOutDate');
-    
-   
+
     if (storedCheckInDate) {
       setCheckInDate(storedCheckInDate);
     }
     if (storedCheckOutDate) {
       setCheckOutDate(storedCheckOutDate);
     }
+
     const interval = setInterval(() => {
       setCurrentIndex(prevIndex =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); 
+    }, 5000);
 
     return () => {
-      clearInterval(interval); 
+      clearInterval(interval);
     };
-
   }, []);
-
-  
 
   const handlePrevClick = () => {
     setCurrentIndex(prevIndex =>
@@ -65,12 +66,8 @@ export const Home = () => {
   const handleSearchRooms = () => {
     if (checkInDate && checkOutDate) {
       const { state } = location;
-      if (state && state.accessToken) {
-        const accessToken = state.accessToken;
-
-        const newState = {accessToken: accessToken, };
-
-        navigate('/available-rooms', { state: newState });
+      if (isLoggedIn) {
+        navigate('/available-rooms');
       } else {
         console.log('Access Token not found in state');
       }

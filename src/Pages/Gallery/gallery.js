@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllRooms } from './gallerySlice';
 
 function Gallery() {
-    const dispatch = useDispatch();
-    const pictures = useSelector(state => state.gallery.pictures);
-  
-    useEffect(() => {
-      dispatch(fetchAllRooms());
-    }, [dispatch]);
+  const dispatch = useDispatch();
+  const pictures = useSelector(state => state.gallery.pictures);
+  const accessToken = localStorage.getItem('accessToken')
+
+  useEffect(() => {
+    dispatch(fetchAllRooms());
+  }, [dispatch]);
   
     return (
       <div className='container'>

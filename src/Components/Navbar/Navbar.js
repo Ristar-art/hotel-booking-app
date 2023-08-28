@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './Navbar.css';
+import { auth } from "../../firebase";
+
 
 export const useLogout = () => {
   const logout = () => {    
-    localStorage.removeItem('accessToken');
+    auth.signOut();
     window.location.href = '/';
-  }  
+  }
+
   return logout;
 }
 
@@ -27,13 +30,13 @@ export const Navbar = ({ user }) => {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="gallery">Gallery</Link>
+          <Link to="/gallery">Gallery</Link>
         </li>
         <li>
-          <Link to="/singup">Sing up</Link>
+          <Link to="/signup">Sing up</Link>
         </li>
         <li>
-          <Link to="login">Login</Link>
+          <Link to="/login">Login</Link>
         </li>
         <li>
           <Link to="/admin">Admin Panel</Link>

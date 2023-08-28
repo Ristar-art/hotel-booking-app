@@ -10,10 +10,10 @@ function AdminPanel() {
     const dispatch = useDispatch();
     const bookedRooms = useSelector(state => state.bookedRooms); 
     const accessToken = localStorage.getItem('accessToken');
-    
-    useEffect(() => {
-      dispatch(fetchBookedRooms(accessToken));
-    }, [dispatch, accessToken]);
+
+useEffect(() => {
+  dispatch(fetchBookedRooms(accessToken));
+}, [dispatch, accessToken]); 
   
  
   
@@ -89,7 +89,7 @@ function AdminPanel() {
             <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
              <div className="room-info">
               <h3>Room {room.roomNumber}</h3>
-              <p>R{room.rentPerDay}</p>              
+              <p>R{room.price}</p>              
             </div>
           </div>
         ))}

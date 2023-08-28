@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // Import useSelector from react-redux
+import { useSelector} from 'react-redux'; 
 import './RoomDescription.css';
 import Footer from '../../Components/Footer/footer';
-//import { useLocation } from 'react-router-dom';
 
 const RoomDescriptionPage = () => {
-  //const location = useLocation();
+  
   const { roomNumber } = useParams();
   const [room, setRoom] = useState(null);
+  
 
   
-  const accessToken = localStorage.getItem('accessToken'); 
+  const accessToken = localStorage.getItem('accessToken')
   const checkInDate = localStorage.getItem('checkInDate');
   const checkOutDate = localStorage.getItem('checkOutDate');
   const isbooked = true;
   const timeDifference = localStorage.getItem('timeDifference');
   const totalPrice = localStorage.getItem('totalPrice')
-
+  console.log('totalPrice is : ', totalPrice)
   useEffect(() => {
     fetch(`http://192.168.1.19:8000/room/${roomNumber}`, {
       headers: {
