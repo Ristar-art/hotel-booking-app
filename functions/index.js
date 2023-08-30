@@ -9,7 +9,6 @@ const decodeIDToken = require("./authenticateToken");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-
 app.use(cors({
   origin: "booking-hotel-25ea1.firebaseapp.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -26,17 +25,14 @@ admin.initializeApp({
   databaseURL: "https://hoteldev-724e1.firebaseio.com",
 });
 
-
 mongoose.connect(functions.config().mongodb.uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-// mongoose.connect('mongodb://127.0.0.1:27017/hotel');
+
 const stripe = require("stripe")(functions.config().stripe.privatekey);
 
-const UserData = require("./models/user.models");
 const Rooms = require("./models/hotel.models");
-
 app.post("/api/signup", async (req, res) => {
   try {
     await User.create({
