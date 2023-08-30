@@ -87,7 +87,7 @@ app.get("/api/all-rooms", async (req, res) => {
 
 app.get("/api/booked-rooms", async (req, res) => {
   try {
-    const bookedRooms = await Rooms.find({isBooked: true}, "room price RoomPhoto");
+    const bookedRooms = await Rooms.find({isBooked: true});
 
     const roomInfo = bookedRooms.map((room) => ({
       roomNumber: room.room,
@@ -107,7 +107,7 @@ app.get("/api/booked-rooms", async (req, res) => {
 
 app.get("/api/available-rooms", async (req, res) => {
   try {
-    const availableRooms = await Rooms.find({isBooked: false}, "room rentperday RoomPhoto");
+    const availableRooms = await Rooms.find({isBooked: false});
 
     const roomInfo = availableRooms.map((room) => ({
       roomNumber: room.room,
@@ -165,12 +165,20 @@ app.post("/api/rooms", async (req, res) => {
 
 app.put("/api/update-room-dates/:roomNumber", async (req, res) => {
   const {roomNumber} = req.params;
-  const {checkInDate, checkOutDate, isbooked, totalPrice, timeDifference} = req.body;
+  const {checkInDate} = req.body;
+  const { checkOutDate} = req.body;
+  const { isbooked} = req.body;
+  const { totalPrice} = req.body;
+  const { timeDifference} = req.body;
 
   try {
     const room = await Rooms.findOneAndUpdate(
         {room: roomNumber},
-        {checkin: checkInDate, checkout: checkOutDate, isBooked: isbooked, price: totalPrice, numberOfDays: timeDifference},
+        {checkin: checkInDate},
+        { checkout: checkOutDate},
+        { isBooked: isbooked}, 
+        {price: totalPrice},
+        {numberOfDays: timeDifference},
         {new: true},
     );
 
@@ -187,57 +195,63 @@ app.put("/api/update-room-dates/:roomNumber", async (req, res) => {
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    const roomNumbers = req.body.items.map((item) => item.price_data.product_data.roomNumber);
-
-    const roomInfoPromises = roomNumbers.map(async (roomNumber) => {
-      const room = await Rooms.findOne({room: roomNumber});
-      if (!room) {
-        throw new Error(`Room with number ${roomNumber} not found.`);
-      }
-      console.log("price is :", room.price * 100);
-
-      return {
-        priceInCents: room.price * 100,
-        roomNumber: room.room,
-        roomType: room.roomType,
-      };
-    });
-
-    const roomInfo = await Promise.all(roomInfoPromises);
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: req.body.items.map((item) => {
-        const RoomNumber = item.price_data.product_data.roomNumber
-        const roomInfoItem = roomInfo.find((info) =>
-          info.roomNumber === RoomNumber,
-        );
-        if (!roomInfoItem) {
-          throw new Error(
-              `error room infor`,
-          );
-        }
-        return {
-          price_data: {
-            currency: "zar",
-            product_data: {
-              name: roomInfoItem.roomType,
-            },
-            unit_amount: roomInfoItem.priceInCents,
-          },
-          quantity: item.quantity,
-        };
-      }),
-      success_url: `${functions.config().client.url}/success`,
-      cancel_url: `${functions.config().client.url}/cancel`,
-    });
-
-    res.json({url: session.url});
+    const roomNumbers = extractRoomNumbers(req.body.items);
+    const roomInfo = await getRoomInfo(roomNumbers);
+    const session = await createStripeSession(req.body.items, roomInfo);
+    res.json({ url: session.url });
   } catch (e) {
-    res.status(500).json({error: e.message});
+    res.status(500).json({ error: e.message });
   }
 });
+
+const extractRoomNumbers = (items) => {
+  return items.map((item) => item.price_data.product_data.roomNumber);
+};
+
+const getRoomInfo = async (roomNumbers) => {
+  const roomInfoPromises = roomNumbers.map(async (roomNumber) => {
+    const room = await Rooms.findOne({ room: roomNumber });
+    if (!room) {
+      throw new Error(`Room with number ${roomNumber} not found.`);
+    }
+    console.log("price is :", room.price * 100);
+
+    return {
+      priceInCents: room.price * 100,
+      roomNumber: room.room,
+      roomType: room.roomType,
+    };
+  });
+
+  return await Promise.all(roomInfoPromises);
+};
+
+const createStripeSession = async (items, roomInfo) => {
+  return await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    mode: "payment",
+    line_items: items.map((item) => {
+      const roomNumber = item.price_data.product_data.roomNumber;
+      const roomInfoItem = roomInfo.find((info) => info.roomNumber === roomNumber);
+      if (!roomInfoItem) {
+        throw new Error("Error room info");
+      }
+      return {
+        price_data: {
+          currency: "zar",
+          product_data: {
+            name: roomInfoItem.roomType,
+          },
+          unit_amount: roomInfoItem.priceInCents,
+        },
+        quantity: item.quantity,
+      };
+    }),
+    success_url: `${functions.config().client.url}/success`,
+    cancel_url: `${functions.config().client.url}/cancel`,
+  });
+};
+
 
 
 app.listen(8000, () => {
