@@ -6,9 +6,12 @@ const mongoose = require('mongoose');
 const User = require('./models/user.models')
 const morgan = require('morgan')
 const decodeIDToken = require('./authenticateToken');
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+
 
 app.use(cors({
-  origin: 'booking-hotel-25ea1.firebaseapp.com', // frontend domain
+  origin: 'booking-hotel-25ea1.firebaseapp.com', 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -16,12 +19,20 @@ app.use(express.json());
 app.use(morgan('tiny'))
 app.use(decodeIDToken);
 
-mongoose.connect(process.env.MONGODB_URI,{
+const serviceAccount = require('./serviceAccount.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://hoteldev-724e1.firebaseio.com' 
+});
+
+
+mongoose.connect(functions.config().mongodb.uri,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }) 
 //mongoose.connect('mongodb://127.0.0.1:27017/hotel');
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY) 
+const stripe = require("stripe")(functions.config().stripe.privatekey) 
 
 const UserData = require('./models/user.models');
 const Rooms = require('./models/hotel.models')
@@ -216,7 +227,7 @@ app.post("/create-checkout-session", async (req, res) => {
     const roomInfo = await Promise.all(roomInfoPromises);
  
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"], 
+      payment_method_types: ["card"],
       mode: "payment",
       line_items: req.body.items.map(item => {
         const roomInfoItem = roomInfo.find(info =>
@@ -226,7 +237,7 @@ app.post("/create-checkout-session", async (req, res) => {
           throw new Error(
             `Room info not found for room number ${item.price_data.product_data.roomNumber}.`
           );
-        }  
+        }
         return {
           price_data: {
             currency: "zar",
@@ -238,10 +249,9 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `${process.env.CLIENT_URL}/success`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+      success_url: `${functions.config().client.url}/success`,
+      cancel_url: `${functions.config().client.url}/cancel`,  
     });
-
     res.json({ url: session.url });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -251,7 +261,6 @@ app.post("/create-checkout-session", async (req, res) => {
   
 
 
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+app.listen(8000, () => {
+  console.log('server started');
 });
