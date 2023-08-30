@@ -166,17 +166,17 @@ app.post("/api/rooms", async (req, res) => {
 app.put("/api/update-room-dates/:roomNumber", async (req, res) => {
   const {roomNumber} = req.params;
   const {checkInDate} = req.body;
-  const { checkOutDate} = req.body;
-  const { isbooked} = req.body;
-  const { totalPrice} = req.body;
-  const { timeDifference} = req.body;
+  const {checkOutDate} = req.body;
+  const {isbooked} = req.body;
+  const {totalPrice} = req.body;
+  const {timeDifference} = req.body;
 
   try {
     const room = await Rooms.findOneAndUpdate(
         {room: roomNumber},
         {checkin: checkInDate},
-        { checkout: checkOutDate},
-        { isBooked: isbooked}, 
+        {checkout: checkOutDate},
+        {isBooked: isbooked},
         {price: totalPrice},
         {numberOfDays: timeDifference},
         {new: true},
@@ -198,9 +198,9 @@ app.post("/create-checkout-session", async (req, res) => {
     const roomNumbers = extractRoomNumbers(req.body.items);
     const roomInfo = await getRoomInfo(roomNumbers);
     const session = await createStripeSession(req.body.items, roomInfo);
-    res.json({ url: session.url });
+    res.json({url: session.url});
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(500).json({error: e.message});
   }
 });
 
@@ -210,7 +210,7 @@ const extractRoomNumbers = (items) => {
 
 const getRoomInfo = async (roomNumbers) => {
   const roomInfoPromises = roomNumbers.map(async (roomNumber) => {
-    const room = await Rooms.findOne({ room: roomNumber });
+    const room = await Rooms.findOne({room: roomNumber});
     if (!room) {
       throw new Error(`Room with number ${roomNumber} not found.`);
     }
@@ -231,8 +231,8 @@ const createStripeSession = async (items, roomInfo) => {
     payment_method_types: ["card"],
     mode: "payment",
     line_items: items.map((item) => {
-      const roomNumber = item.price_data.product_data.roomNumber;
-      const roomInfoItem = roomInfo.find((info) => info.roomNumber === roomNumber);
+      const Number = item.price_data.product_data.roomNumber;
+      const roomInfoItem = roomInfo.find((info) => info.roomNumber === Number);
       if (!roomInfoItem) {
         throw new Error("Error room info");
       }
@@ -251,7 +251,6 @@ const createStripeSession = async (items, roomInfo) => {
     cancel_url: `${functions.config().client.url}/cancel`,
   });
 };
-
 
 
 app.listen(8000, () => {
