@@ -210,11 +210,11 @@ app.post("/create-checkout-session", async (req, res) => {
       mode: "payment",
       line_items: req.body.items.map((item) => {
         const roomInfoItem = roomInfo.find((info) =>
-          info.roomNumber === item.price_data.product_data.roomNumber,
+          info.roomNumber === item.price_data.product_data.roomNumber
         );
         if (!roomInfoItem) {
           throw new Error(
-              `Room info not found for room number ${item.price_data.product_data.roomNumber}.`,
+            `Room info not found for room number ${item.price_data.product_data.roomNumber}.`
           );
         }
         return {
@@ -231,6 +231,7 @@ app.post("/create-checkout-session", async (req, res) => {
       success_url: `${functions.config().client.url}/success`,
       cancel_url: `${functions.config().client.url}/cancel`,
     });
+    
     res.json({url: session.url});
   } catch (e) {
     res.status(500).json({error: e.message});
