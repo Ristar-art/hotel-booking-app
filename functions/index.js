@@ -22,10 +22,7 @@ app.use(decodeIDToken);
 
 const serviceAccount = require("./serviceAccount.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://hoteldev-724e1.firebaseio.com",
-});
+
 
 mongoose.connect(functions.config().mongodb.uri, {
   useNewUrlParser: true,
