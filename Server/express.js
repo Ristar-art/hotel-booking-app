@@ -26,7 +26,7 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 const UserData = require('./models/user.models');
 const Rooms = require('./models/hotel.models')
 
-app.post('/api/signup', async (req, res) => {
+app.post('api/signup', async (req, res) => {
   try {
   
     await User.create({ 
@@ -46,7 +46,7 @@ app.post('/api/signup', async (req, res) => {
     }
   }})
 
-app.post('/api/login', async (req, res) => {
+app.post('api/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -65,7 +65,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-app.get('/api/all-rooms', async (req, res) => {
+app.get('api/all-rooms', async (req, res) => {
   
   try {
     const allRooms = await Rooms.find({});
@@ -80,7 +80,7 @@ app.get('/api/all-rooms', async (req, res) => {
 
 });
 
-app.get('/api/booked-rooms', async (req, res) => {
+app.get('api/booked-rooms', async (req, res) => {
 
  
   
@@ -104,7 +104,7 @@ app.get('/api/booked-rooms', async (req, res) => {
 
 });
 
-app.get('/api/available-rooms', async (req, res) => {
+app.get('api/available-rooms', async (req, res) => {
 
   
   try {
@@ -127,7 +127,7 @@ app.get('/api/available-rooms', async (req, res) => {
 
 });
 
-app.get('/room/:roomNumber', async (req, res) => {
+app.get('room/:roomNumber', async (req, res) => {
 
 
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -155,7 +155,7 @@ res.setHeader('Expires', '0');
 
 });
 
-app.post('/api/rooms', async (req, res) => {
+app.post('api/rooms', async (req, res) => {
 
  
   try {
@@ -170,7 +170,7 @@ app.post('/api/rooms', async (req, res) => {
 return res.status(403).send('Not authorized')
 });
 
-app.put('/api/update-room-dates/:roomNumber', async (req, res) => {
+app.put('api/update-room-dates/:roomNumber', async (req, res) => {
 
   
   const { roomNumber } = req.params;
@@ -194,7 +194,7 @@ app.put('/api/update-room-dates/:roomNumber', async (req, res) => {
   }
 }); 
 
-app.post("/create-checkout-session", async (req, res) => {
+app.post("create-checkout-session", async (req, res) => {
  
   try {
     const roomNumbers = req.body.items.map(item => item.price_data.product_data.roomNumber);
