@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const addNewRoom = createAsyncThunk(
   'rooms/addNewRoom',
   async (newRoomData) => {
-    const response = await fetch('http://192.168.1.19:8000/api/rooms', {
+    const response = await fetch('https://192.168.1.19:8000/api/rooms', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

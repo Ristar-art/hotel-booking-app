@@ -7,9 +7,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user.models");
 const morgan = require("morgan");
 const decodeIDToken = require("./authenticateToken");
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const bodyParser = require('body-parser');
+
 
 app.use(cors({
   origin: "booking-hotel-25ea1.firebaseapp.com",
@@ -20,11 +18,9 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(decodeIDToken);
 
-const serviceAccount = require("./serviceAccount.json");
 
-
-//console.log("functions.config():", functions.config());
-mongoose.connect(MONGODB_URI, {
+// console.log("functions.config():", functions.config());
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
