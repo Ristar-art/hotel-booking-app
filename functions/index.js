@@ -24,12 +24,12 @@ const serviceAccount = require("./serviceAccount.json");
 
 
 //console.log("functions.config():", functions.config());
-mongoose.connect('mongodb+srv://boiketlo:wlAng9qDc0ZoIA8C@cluster0.jvdtm2c.mongodb.net/hotel?retryWrites=true&w=majority', {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const stripe = require("stripe")(sk_test_51NYoi5AndaV81xG1VJdCLTC9cRI0paqZz38AR9NE1TsOANlSR08dZsrxMoyyMLK9CMFXORBbf2PNmnXCLLtUTCQU00UhRj5nCb);
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const Rooms = require("./models/hotel.models");
 app.post("/api/signup", async (req, res) => {
