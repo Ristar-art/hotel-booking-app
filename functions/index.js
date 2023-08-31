@@ -1,4 +1,5 @@
 
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -8,6 +9,7 @@ const morgan = require("morgan");
 const decodeIDToken = require("./authenticateToken");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const bodyParser = require('body-parser');
 
 app.use(cors({
   origin: "booking-hotel-25ea1.firebaseapp.com",
@@ -247,8 +249,8 @@ const createStripeSession = async (items, roomInfo) => {
         quantity: item.quantity,
       };
     }),
-    success_url: `${functions.config().client.url}/success`,
-    cancel_url: `${functions.config().client.url}/cancel`,
+    success_url: `${process.env.CLIENT_URL}/success`,
+    cancel_url: `${process.env.CLIENT_URL}/cancel`,
   });
 };
 
