@@ -52,7 +52,7 @@ function SignUp() {
 
       
 
-      const response = await fetch('https://192.168.1.19:8000/api/signup', {
+      const response = await fetch('https://booking-hotel-25ea1.firebaseapp.com/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

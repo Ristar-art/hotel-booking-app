@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccount.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://booking-hotel-25ea1.firebaseio.com",
+  databaseURL: "https://booking-hotel-25ea1.firebaseapp.com",
 });
 
 /**
