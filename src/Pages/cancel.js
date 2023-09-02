@@ -13,7 +13,7 @@ export default function Cancel() {
 
   const handleCancell = () => {   
 
-    fetch(`https://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+    fetch(`https://booking-hotel-25ea1.firebaseapp.com/api/update-room-dates/${roomNumber}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

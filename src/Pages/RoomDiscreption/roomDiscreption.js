@@ -19,7 +19,7 @@ const RoomDescriptionPage = () => {
   const totalPrice = localStorage.getItem('totalPrice')
   console.log('totalPrice is : ', totalPrice)
   useEffect(() => {
-    fetch(`https://192.168.1.19:8000/room/${roomNumber}`, {
+    fetch(`https://booking-hotel-25ea1.firebaseapp.com/room/${roomNumber}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
@@ -53,7 +53,7 @@ const RoomDescriptionPage = () => {
       },
     ];
 
-    fetch(`https://192.168.1.19:8000/api/update-room-dates/${roomNumber}`, {
+    fetch(`https://booking-hotel-25ea1.firebaseapp.com/api/update-room-dates/${roomNumber}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const RoomDescriptionPage = () => {
   
     
    
-    fetch("https://192.168.1.19:8000/create-checkout-session", {
+    fetch("https://booking-hotel-25ea1.firebaseapp.com/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

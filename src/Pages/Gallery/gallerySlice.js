@@ -5,7 +5,7 @@ export const fetchAllRooms = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await fetch('https://192.168.1.19:8000/api/all-rooms', {
+      const response = await fetch('https://booking-hotel-25ea1.firebaseapp.com/api/all-rooms', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`
