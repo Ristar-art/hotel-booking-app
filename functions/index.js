@@ -68,6 +68,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.get("/api/all-rooms", async (req, res) => {
+  console.log("allroms api is working");
   try {
     const allRooms = await Rooms.find({});
     const roomPicture = allRooms.map((room) => ({
@@ -81,6 +82,7 @@ app.get("/api/all-rooms", async (req, res) => {
 });
 
 app.get("/api/booked-rooms", async (req, res) => {
+  console.log("booked rooms api is working");
   try {
     const bookedRooms = await Rooms.find({isBooked: true});
 
@@ -101,6 +103,7 @@ app.get("/api/booked-rooms", async (req, res) => {
 });
 
 app.get("/api/available-rooms", async (req, res) => {
+  console.log("available rooms api is working");
   try {
     const availableRooms = await Rooms.find({isBooked: false});
 
