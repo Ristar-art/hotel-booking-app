@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const addNewRoom = createAsyncThunk(
   'rooms/addNewRoom',
   async (newRoomData) => {
-    const response = await fetch('https://booking-hotel-25ea1.firebaseapp.com/api/rooms', {
+    const response = await fetch('http://localhost:8000/api/rooms', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

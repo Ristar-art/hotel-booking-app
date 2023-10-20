@@ -28,8 +28,7 @@ useEffect(() => {
   
     const handleAddRoom = () => {
       dispatch(addNewRoom(newRoom))
-        .then(() => {
-          console.log('Room added successfully');
+        .then(() => {         
           setNewRoom({
             room: 0,
             roomType: '',
@@ -82,25 +81,21 @@ useEffect(() => {
           />
            <button className="submit-button" onClick={handleAddRoom}>Add Room</button>
         </div>
-       <div className='booked-rooms'>
-        <h1>Booked Rooms</h1>
-       {bookedRooms.map((room, index) => (
-          <div key={index} className="room-card">
-            <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
-             <div className="room-info">
-              <h3>Room {room.roomNumber}</h3>
-              <p>R{room.price}</p>              
+        <div className='booked-rooms'>
+          {/* <h1>Booked Rooms</h1> */}
+          {bookedRooms.map((room, index) => (
+            <div key={index} className="room-card">
+              <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
+              <div className="room-info">
+                <h3>Room {room.roomNumber}</h3>
+                <p>Price: R{room.price}</p> {/* Displaying the price */}
+              </div>
             </div>
-          </div>
-        ))}
-        
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-       </div>
-       
-      </div>
-      </div>
-      
-    );
-  }
-  
-  export default AdminPanel;
+export default AdminPanel;

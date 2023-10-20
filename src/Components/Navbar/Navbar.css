@@ -1,45 +1,41 @@
-
 ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    display: flex;  
-    margin-bottom: 5px;
-  }
-  
-  li span {
-    flex: 1;
-    font-size: 16px;
-  }
-  nav {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f7f7f7;
-    padding: 10px;
-    z-index: 2;
-  }
-  .navbar-links li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  .navbar-links li:last-child {
-    margin-right: 0;
-  }
-  .nav-button:hover {
-    background-color: rgba(80, 76, 76, 0.8);
-  }
+  list-style: none;
+  padding: 0;
+  display: flex; /* Added to make the list items align horizontally */
+}
 
-  .navbar-links button{
-   position: absolute;
-    top: 25%;
-    left: 75%;
-    
-    background-color: #eb6767;
-    padding: 10px;
-    z-index: 2;
-  }
+li {
+  margin-bottom: 5px;
+}
+
+li span {
+  flex: 1;
+  font-size: 16px;
+}
+
+nav {
+  position: relative;
+  width: 100%;
+  background-color: #f7f7f7;
+  padding: 10px;
+  display: flex; /* Added to make the list items align horizontally */
+  justify-content: space-between; /* Added to push the button to the right */
+}
+
+.navbar-links li {
+  margin-right: 10px;
+}
+
+.navbar-links li:last-child {
+  margin-right: 0;
+}
+
+.nav-button {
+  display: flex; /* Added to align the button properly */
+  align-items: center; /* Added to align the button vertically in the navbar */
+}
+
+.nav-button button {
+  background-color: #eb6767;
+  padding: 10px;
+}

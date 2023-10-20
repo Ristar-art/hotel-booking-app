@@ -16,6 +16,7 @@ export const Home = () => {
   useEffect(() => {
     
     const userAccessToken = localStorage.getItem('accessToken');
+    console.log('userAccessToken is: ', userAccessToken)
     setIsLoggedIn(!!userAccessToken);
 
     const storedCheckInDate = localStorage.getItem('checkInDate');

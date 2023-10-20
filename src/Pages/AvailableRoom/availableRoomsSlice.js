@@ -4,8 +4,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchAvailableRooms = createAsyncThunk(
   'availableRooms/fetchAvailableRooms',
   async (accessToken) => {
-    console.log('this happens - to fetch all room')
-    const response = await fetch('https://booking-hotel-25ea1.firebaseapp.com/api/available-rooms', {
+    
+    const response = await fetch('http://localhost:8000/api/available-rooms', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`

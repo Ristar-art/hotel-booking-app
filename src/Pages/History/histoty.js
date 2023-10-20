@@ -1,0 +1,46 @@
+import React, { useState, useEffect } from 'react';
+import './history.css'; // Make sure to create a History.css file and import it here
+
+const History = () => {
+  const [history, setHistory] = useState([]);
+  const accessToken = localStorage.getItem('accessToken')
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/history', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+        });
+        const data = await response.json();
+        setHistory(data);
+      } catch (error) {
+        console.error('Error fetching history:', error);
+      }
+    };
+    fetchHistory();
+  }, []);
+
+  return (
+    <div className="about-container">
+      <div className="about-intro">
+        <h1>History of your Rents </h1>
+      </div>
+      <div className="about-content">
+        {history.map((item) => (
+          <div key={item._id} className="about-section">
+            <h2>Room: {item.room}</h2>
+            <p>Room Type: {item.roomType}</p>
+            <p>Check-in: {item.checkin}</p>
+            <p>Check-out: {item.checkout}</p>
+            <p>Price: {item.price}</p>
+            <p>Number of Days: {item.numberOfDays}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default History;

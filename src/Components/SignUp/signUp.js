@@ -8,14 +8,11 @@ import {
   clearError,
   clearForm,
 } from './singUpSlice';
-
-import {  createUserWithEmailAndPassword ,auth } from '../../firebase';
+// Import Firebase-related code (e.g., userCredential) if needed.
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector(
-    (state) => state.signUp
-  );
+  const { isLoading } = useSelector((state) => state.signUp);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -23,8 +20,6 @@ function SignUp() {
     password: '',
     passwordRepeat: '',
   });
-  const [user, setUser] = useState(null);
-
 
   const validationSchema = yup.object().shape({
     name: yup.string().required('Username is required'),
@@ -36,33 +31,24 @@ function SignUp() {
       .required('Confirm password is required'),
   });
 
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
-
+  
     try {
-      console.log('auth: ', auth)
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-
-      
-
-      const response = await fetch('https://booking-hotel-25ea1.firebaseapp.com/api/signup', {
+      // Replace 'userCredential' with the actual Firebase userCredential if needed
+      // const userCredential = await someFirebaseAuthFunction();
+  
+      const response = await fetch('http://localhost:8000/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uid: userCredential.user.uid,
           ...formData,
         }),
       });
-
+      
       if (response.ok) {
         console.log('User registered successfully');
         dispatch(setLoading(false));
@@ -81,6 +67,7 @@ function SignUp() {
       );
     }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,9 +78,14 @@ function SignUp() {
   };
 
   return (
-    <div className="signUp-body">
-      <form onSubmit={handleSubmit}>
+    <div className="about-container signUp-body">
+      <form onSubmit={handleSubmit} className="about-section">
+        <div className="about-intro">
+          <h1>User Registration</h1>
+          <p>Please fill in the required information to register</p>
+        </div>
         <input
+          className="signup-input"
           placeholder="Username"
           name="name"
           value={formData.name}
@@ -101,6 +93,7 @@ function SignUp() {
         />
         <br />
         <input
+          className="signup-input"
           placeholder="Email"
           name="email"
           value={formData.email}
@@ -108,6 +101,7 @@ function SignUp() {
         />
         <br />
         <input
+          className="signup-input"
           placeholder="Password"
           name="password"
           type="password"
@@ -116,6 +110,7 @@ function SignUp() {
         />
         <br />
         <input
+          className="signup-input"
           placeholder="Repeat Password"
           name="passwordRepeat"
           type="password"
@@ -123,11 +118,17 @@ function SignUp() {
           onChange={handleChange}
         />
         <br />
-        {!isLoading ? (
-          <button type="submit">Register</button>
-        ) : (
-          <button type="submit" disabled>Loading...</button>
-        )}
+        <div className="about-section">
+          {!isLoading ? (
+            <button className="signup-button" type="submit">
+              Register
+            </button>
+          ) : (
+            <button className="signup-button" type="submit" disabled>
+              Loading...
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

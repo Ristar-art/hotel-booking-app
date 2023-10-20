@@ -6,24 +6,28 @@ import { fetchAllRooms } from './gallerySlice';
 function Gallery() {
   const dispatch = useDispatch();
   const pictures = useSelector(state => state.gallery.pictures);
-  const accessToken = localStorage.getItem('accessToken')
+ 
 
   useEffect(() => {
     dispatch(fetchAllRooms());
   }, [dispatch]);
-  
-    return (
-      <div className='container'>
-        <div className="room-gallery">
-          {pictures.map((room, index) => (
-            <div key={index} className="room-card">
-              <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
-            </div>
-          ))}
-        </div>
+
+  return (
+    <div className='about-container'>
+      <div className="about-intro">
+        {/* <h1>Gallery</h1> */}
       </div>
-    );
-  }
-  
-  export default Gallery;
-  
+      <div className="about-content">
+        {pictures.map((room, index) => (
+          <div key={index} className="about-section room-card">
+            <img src={room.roomPhoto} alt={`Room ${room.roomNumber}`} />
+            <h2>Room {room.roomNumber}</h2>
+            <p>{room.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Gallery;

@@ -251,6 +251,8 @@ const createStripeSession = async (items, roomInfo) => {
 };
 
 
-app.listen(8000, () => {
-  console.log("server started");
+const port = 8484;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
+

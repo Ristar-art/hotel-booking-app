@@ -1,81 +1,82 @@
-
-
 .admin-panel-container {
-   
-  justify-content: center;
-  align-items: center;    
-  background-color: #007bff;
-  flex-direction: column;  
-  text-align: center;  
-   
-  }
-  
-  
-  .form-group {
-    align-items: center; 
-    margin-bottom: 15px;   
-    justify-content: center;    
-    background-color: #bfcedf;      
-    top: 20%; 
-    left: 5%;   
-    display: flex;
-    flex-direction: column;  
-    text-align: center;
-    position: absolute;
-    border-radius: 5%;
-    
-  }
-  
-  .form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input {
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    background-color: #86787b;
-    color: rgb(17, 17, 17);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 15px; 
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .booked-rooms{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    top: 75%; 
-    left: 50%;
-    background-color: #ffffff;
-    margin-bottom: 15px;
-    position: absolute;
-    flex-direction: row;
-  }
+  background: #f7f7f7;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align the children horizontally */
+  justify-content: center; /* Center align the children vertically */
+}
 
-  .room-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    width: 250px;
-    overflow: hidden;
-    
-  }
+.form-group {
+  max-width: 400px;
+  text-align: left;
+}
 
-  .room-info {
-    padding: 10px;
-  }
+.form-group label {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submit-button {
+  
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.booked-rooms {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  justify-content: center; /* Center-align the items horizontally */
+}
+
+.room-card {
+  flex-basis: calc(33.33% - 20px);
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  text-align: left;
+  transition: transform 0.2s;
+}
+
+.room-card img {
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.room-info {
+  padding: 10px;
+}
+
+.room-info h3 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.room-info p {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+}
