@@ -267,15 +267,13 @@ app.get("/api/history",authenticateToken, async (req, res) => {
 app.post("/api/createHistory", authenticateToken, async (req, res) => {
   console.log('this api is being called');
   try {
-    const { roomNumber, roomType, checkin, checkout, price, numberOfDays,email } = req.body;
-    // const { user } = req; // Assuming req.user is set by the authentication middleware
+    const { roomNumber, roomType, checkInDate, checkOutDate, price, numberOfDays, email } = req.body;
     const newHistory = {
-      historyId: uuidv4(), // Generate a unique identifier for the history entry
-      email: email, // Pass the user from the request
-      room: roomNumber,
+      email: email,
+      roomNumber: roomNumber,
       roomType: roomType,
-      checkin: checkin,
-      checkout: checkout,
+      checkInDate:checkInDate,
+      checkOutDate: checkOutDate,
       price: price,
       numberOfDays: numberOfDays
     };

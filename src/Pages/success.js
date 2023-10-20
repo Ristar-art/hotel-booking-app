@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./success.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, clearError, clearForm } from '../Components/SignUp/singUpSlice'; // Import the necessary actions
-
-
+import { setLoading, clearError, clearForm } from '../Components/SignUp/singUpSlice';
 
 export default function Success() {
   const dispatch = useDispatch();
@@ -12,11 +10,11 @@ export default function Success() {
   const roomNumber = localStorage.getItem("chosenRoom");
   const [user, setUser] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
-  
+
   useEffect(() => {
     const fetchBookingDetails = async () => {
       try {
-        dispatch(setLoading(true)); // Set loading to true
+        dispatch(setLoading(true));
 
         const roomResponse = await fetch(
           `http://localhost:8000/api/room/${roomNumber}`,
@@ -55,15 +53,14 @@ export default function Success() {
 
           if (userProfileResponse.ok) {
             const userData = await userProfileResponse.json();
-            setUser(userData._id);
-            console.log('userData._id is: ', userData._id);
+            setUser(userData.email);
 
-            const historyData = {             
+            const historyData = {
               email: userData.email,
               roomNumber: roomData.roomNumber,
               roomType: roomData.roomType,
-              checkin: roomData.checkin,
-              checkout: roomData.checkout,
+              checkInDate: roomData.checkin,
+              checkOutDate: roomData.checkout,
               price: roomData.price,
               numberOfDays: roomData.numberOfDays,
             };
@@ -111,7 +108,7 @@ export default function Success() {
           <strong>Room Type:</strong> {bookingDetails.roomType}
         </p>
         <p>
-          <strong>Check-in Date:</strong> {bookingDetails.checkInDate}nl.
+          <strong>Check-in Date:</strong> {bookingDetails.checkInDate}
         </p>
         <p>
           <strong>Check-out Date:</strong> {bookingDetails.checkOutDate}
