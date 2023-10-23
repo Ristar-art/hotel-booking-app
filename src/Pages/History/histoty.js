@@ -7,7 +7,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/history', {
+        const response = await fetch('http://localhost:8000/api/userHistory', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`

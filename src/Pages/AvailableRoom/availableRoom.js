@@ -13,6 +13,7 @@ function AvailableRooms() {
   console.log('access token is: ', accessToken)
   const checkInDate = new Date(localStorage.getItem('checkInDate'));
   const checkOutDate = new Date(localStorage.getItem('checkOutDate')); 
+  
   const timeDifference = checkOutDate.getTime() - checkInDate.getTime();
   localStorage.setItem('timeDifference',timeDifference)
   const numberOfDays = timeDifference / (1000 * 3600 * 24);

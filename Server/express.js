@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const User = require("./models/user.models");
 const morgan = require("morgan");
 const { v4: uuidv4 } = require('uuid');
+const moment = require('moment');
+
 
 app.use(cors());
 app.use(express.json());
@@ -21,7 +23,8 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 // const UserData = require('./models/user.models');
 const Rooms = require("./models/hotel.models");
-const History = require('./models/history.model');
+//const History = require('./models/history.model');
+const userHistory = require('./models/userHistory.model');
 app.post("/api/signup", async (req, res) => {
   try {
     await User.create({
@@ -251,47 +254,44 @@ app.put("/api/user-profiles/:id",authenticateToken, async (req, res) => {
   }
 });
 
-app.get("/api/history",authenticateToken, async (req, res) => {
-  
-    try {
-      // Use the History model to find all history records
-      const history = await History.find();
-      res.json(history);
-    } catch (error) {
-      console.error('Error fetching history:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  
+app.get("/api/userHistory", authenticateToken, async (req, res) => {
+  try {
+    const userEmail = req.user.email; // Assuming the email is available in the req.user object
+     
+     console.log('userEmail is: ',userEmail)
+    // Use the userHistory model to find history records by email
+    const history = await userHistory.find({ email: userEmail });
+    res.json(history);
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
-app.post("/api/createHistory", authenticateToken, async (req, res) => {
+ 
+app.post("/api/createHistory", async (req, res) => {
   console.log('This API is being called');
   try {
     const { roomNumber, roomType, checkInDate, checkOutDate, price, numberOfDays, email } = req.body;
+
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }
-    const newBooking = new History({
-      email: email,
+
+    await userHistory.create({
+      email,
       roomNumber: roomNumber,
       roomType: roomType,
-      checkInDate: checkInDate,
-      checkOutDate: checkOutDate,
+      checkInDate: moment(checkInDate).format('YYYY-MM-DD'),
+      checkOutDate: moment(checkOutDate).format('YYYY-MM-DD'),
       price: price,
       numberOfDays: numberOfDays
     });
 
-    console.log('newBooking is: ', newBooking);
-
-    const createdHistory = await newBooking.save();
-    return res.status(201).json(createdHistory);
+    res.json({ status: "ok" });
   } catch (error) {
     console.error("Error creating history:", error);
-    if (error.code === 403) {
-      return res.status(403).send("Not authorized");
-    } else {
-      return res.status(500).json({ error: "Internal server error" });
-    }
+    res.status(500).json({ status: "error", error: "An error occurred" });
   }
 });
 
@@ -348,7 +348,7 @@ app.post("/api/create-checkout-session",authenticateToken, async (req, res) => {
     });
 
     res.json({ url: session.url });
-  } catch (e) {
+  } catch (e) { 
     res.status(500).json({ error: e.message });
   }
 });

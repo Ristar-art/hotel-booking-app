@@ -55,15 +55,18 @@ export const Home = () => {
   const handleCheckInDateChange = event => {
     const newCheckInDate = new Date(event.target.value).toISOString().split('T')[0];
     setCheckInDate(newCheckInDate);
-    console.log('newCheckInDate is: ',newCheckInDate)
+    
     localStorage.setItem('checkInDate', newCheckInDate);
+    console.log('newCheckInDate is: ',newCheckInDate)
   };
+  
   
   const handleCheckOutDateChange = event => {
     const newCheckOutDate = new Date(event.target.value).toISOString().split('T')[0];
     setCheckOutDate(newCheckOutDate);
-    console.log('newCheckOutDate is: ',newCheckOutDate)
+   
     localStorage.setItem('checkOutDate', newCheckOutDate);
+    console.log('newCheckOutDate is: ',newCheckOutDate)
   };
   
 
