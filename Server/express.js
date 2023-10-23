@@ -265,22 +265,25 @@ app.get("/api/history",authenticateToken, async (req, res) => {
 });
 
 app.post("/api/createHistory", authenticateToken, async (req, res) => {
-  console.log('this api is being called');
+  console.log('This API is being called');
   try {
     const { roomNumber, roomType, checkInDate, checkOutDate, price, numberOfDays, email } = req.body;
-    const newHistory = {
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+    const newBooking = new History({
       email: email,
       roomNumber: roomNumber,
       roomType: roomType,
-      checkInDate:checkInDate,
+      checkInDate: checkInDate,
       checkOutDate: checkOutDate,
       price: price,
       numberOfDays: numberOfDays
-    };
+    });
 
-    console.log('new history is: ', newHistory);
+    console.log('newBooking is: ', newBooking);
 
-    const createdHistory = await History.create(newHistory);
+    const createdHistory = await newBooking.save();
     return res.status(201).json(createdHistory);
   } catch (error) {
     console.error("Error creating history:", error);
@@ -291,6 +294,7 @@ app.post("/api/createHistory", authenticateToken, async (req, res) => {
     }
   }
 });
+
 
 
 app.post("/api/create-checkout-session",authenticateToken, async (req, res) => {

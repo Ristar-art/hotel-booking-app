@@ -10,11 +10,12 @@ export default function Success() {
   const roomNumber = localStorage.getItem("chosenRoom");
   const [user, setUser] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
       try {
-        dispatch(setLoading(true));
+        setLoading(true);
 
         const roomResponse = await fetch(
           `http://localhost:8000/api/room/${roomNumber}`,
@@ -42,52 +43,48 @@ export default function Success() {
           numberOfDays: roomData.numberOfDays,
         });
 
-        try {
-          const userProfileResponse = await fetch('http://localhost:8000/api/user-profile', {
-            method: 'GET',
+        const userProfileResponse = await fetch('http://localhost:8000/api/user-profile', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (userProfileResponse.ok) {
+          const userData = await userProfileResponse.json();
+          setUser(userData.email);
+
+          const historyData = {
+            email: userData.email,
+            roomNumber: roomData.roomNumber,
+            roomType: roomData.roomType,
+            checkInDate: roomData.checkin,
+            checkOutDate: roomData.checkout,
+            price: roomData.price,
+            numberOfDays: roomData.numberOfDays,
+          };
+
+          const createHistoryResponse = await fetch("http://localhost:8000/api/createHistory", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`
             },
+            body: JSON.stringify(historyData),
           });
 
-          if (userProfileResponse.ok) {
-            const userData = await userProfileResponse.json();
-            setUser(userData.email);
-
-            const historyData = {
-              email: userData.email,
-              roomNumber: roomData.roomNumber,
-              roomType: roomData.roomType,
-              checkInDate: roomData.checkin,
-              checkOutDate: roomData.checkout,
-              price: roomData.price,
-              numberOfDays: roomData.numberOfDays,
-            };
-
-            const createHistoryResponse = await fetch("http://localhost:8000/api/createHistory", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`
-              },
-              body: JSON.stringify(historyData),
-            });
-
-            if (!createHistoryResponse.ok) {
-              throw new Error("Failed to create history entry");
-            }
-
-            console.log('History entry created successfully');
-
-            dispatch(setLoading(false));
-            dispatch(clearError());
-            dispatch(clearForm());
-          } else {
-            setUser(null);
+          if (!createHistoryResponse.ok) {
+            throw new Error("Failed to create history entry");
           }
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
+
+          console.log('History entry created successfully');
+
+          setLoading(false);
+          dispatch(clearError());
+          dispatch(clearForm());
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error("Error during processing:", error);
