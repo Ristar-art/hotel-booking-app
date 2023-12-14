@@ -8,6 +8,7 @@ import {
   clearError,
   clearForm,
 } from './singUpSlice';
+import { Navbar } from '../Navbar/Navbar';
 // Import Firebase-related code (e.g., userCredential) if needed.
 
 function SignUp() {
@@ -78,7 +79,22 @@ function SignUp() {
   };
 
   return (
-    <div className="about-container signUp-body">
+    <div
+    style={{
+      height: "100vh",width: "100vw",
+    }}
+  >
+    {/* <Navbar /> */}
+    <div
+      style={{
+        height: "100vh",width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        // textAlign:'center',
+        alignItems: "center",
+      }}
+    >
       <form onSubmit={handleSubmit} className="about-section">
         <div className="about-intro">
           <h1>User Registration</h1>
@@ -130,6 +146,7 @@ function SignUp() {
           )}
         </div>
       </form>
+    </div>
     </div>
   );
 }
