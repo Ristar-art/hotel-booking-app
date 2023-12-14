@@ -12,11 +12,10 @@ import Cancel from './Pages/cancel';
 import Gallery from './Pages/Gallery/gallery';
 import AvailableRooms from './Pages/AvailableRoom/availableRoom';
 import SignUp from './Components/SignUp/signUp';
-import { setIsLoggedIn, setIsLoading } from './authSlice';
-import { Login } from './Components/Loginpages/logIn';
+import { setIsLoggedIn, setIsLoading } from './authSlice'; 
 import UserProfile from './Pages/UresProfile/userprofile';
 import History from './Pages/History/histoty';
-
+import {Login} from './Components/Loginpages/login'
 
 function App() {
   const dispatch = useDispatch();
@@ -45,7 +44,7 @@ function App() {
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<Cancel />} />
         <Route path="/signup" element={<SignUp />} />       
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/available-rooms" element={<AvailableRooms />} />
         <Route path="/room/:roomNumber" element={<RoomDescriptionPage />} />
