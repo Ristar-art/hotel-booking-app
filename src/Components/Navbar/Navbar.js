@@ -62,40 +62,41 @@ export const Navbar = () => {
   const { user, email, isLoading, handleLogout } = useAuth();
 
   return (
-    <nav>
-      <ul className="navbar-links">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/gallery">Gallery</Link>
-        </li>
-        <li>
-          <Link to="/signup">Sign up</Link>
-        </li>
-        <li>
-          <Link to="/admin">Admin Panel</Link>
-        </li>
-        <li>
-          {email ? (
-            <>
-              <li>
-                <Link to="/userprofile">{email}</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Log out</button>
-              </li>
-            </>
-          ) : (
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          )}
-        </li>
-      </ul>
+    <nav style={{ 
+      position: 'relative',
+      width: '100vw',
+      maxHeight:"10vh",
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: "wrap",
+      zIndex:100
+    }}>
+
+      <div style={{ marginLeft: 5, height: "100%", alignItems: 'center', display: "flex", paddingBottom: 10, paddingTop: 10 }}>
+        <Link to="/" style={{ marginRight: '10px', textDecoration: 'none', color: '#333' }}>Home</Link>
+        <Link to="/about" style={{ marginRight: '10px', textDecoration: 'none', color: '#333' }}>About</Link>
+        <Link to="/gallery" style={{ marginRight: '10px', textDecoration: 'none', color: '#333' }}>Gallery</Link>
+        <Link to="/signup" style={{ marginRight: '10px', textDecoration: 'none', color: '#333' }}>SignUp</Link>
+        
+        {(email === "mochochokoboiketlo@gmail.com" && email !== null) && (
+          <Link to="/admin" style={{ marginRight: '10px', textDecoration: 'none', color: '#333' }}>Admin</Link>
+        )}
+      </div>
+      <>
+{email ? (
+  <div style={{ marginRight: 50, height: "100%", display: "flex", flexDirection: "row", alignItems: "center", paddingBottom: 10, paddingTop: 10, flexWrap: "wrap" }}>
+    <>
+      <Link to="/userprofile" style={{ marginRight: 20 }}>{email}</Link>
+      <Link style={{ textDecoration: 'none', color: '#333' }} onClick={handleLogout}>Log out</Link>
+    </>
+  </div>
+) : (
+  <Link to="/login" style={{ textDecoration: 'none', color: '#333' }}>Login</Link>
+)}
+</>
+
+      
     </nav>
   );
 };
