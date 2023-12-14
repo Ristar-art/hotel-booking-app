@@ -77,7 +77,7 @@ export const Navbar = () => {
     >
       <div
         style={{
-          marginLeft: 5,
+          marginLeft: 10,
           height: "100%",
           alignItems: "center",
           display: "flex",
@@ -110,7 +110,7 @@ export const Navbar = () => {
           SignUp
         </Link>
 
-        {email === "mochochokoboiketlo@gmail.com" && email !== null && (
+        {email === "mochochokoboiketlo@gmail.com" && (
           <Link
             to="/admin"
             style={{

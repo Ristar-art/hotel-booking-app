@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addNewRoom } from './roomReducer'; 
 import './AdminPanel.css'
 import { fetchBookedRooms } from './bookedRoomsSlice';
+import { Navbar } from '../../Components/Navbar/Navbar';
 
 
 
@@ -46,8 +47,16 @@ useEffect(() => {
     return (
 
       <div>
-        <div className="admin-panel-container">
-        
+        <div style={{
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+     // textAlign:'center',
+      alignItems:'center'
+      
+    }}>
+        {/* <Navbar /> */}
           <div className="form-group">
           <label>Room Number:</label>
           <input
