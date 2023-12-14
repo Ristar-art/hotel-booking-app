@@ -13,7 +13,7 @@ import Gallery from './Pages/Gallery/gallery';
 import AvailableRooms from './Pages/AvailableRoom/availableRoom';
 import SignUp from './Components/SignUp/signUp';
 import { setIsLoggedIn, setIsLoading } from './authSlice';
-import { Login } from './Components/Loginpages/logIn';
+import {Login} from './Components/Loginpages/login'
 import UserProfile from './Pages/UresProfile/userprofile';
 import History from './Pages/History/histoty';
 
