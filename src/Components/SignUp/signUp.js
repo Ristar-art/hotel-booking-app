@@ -81,13 +81,13 @@ function SignUp() {
   return (
     <div
     style={{
-      height: "100vh",width: "100vw",
+      width: "100vw",
     }}
   >
     {/* <Navbar /> */}
     <div
       style={{
-        height: "100vh",width: "100vw",
+        width: "100vw",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

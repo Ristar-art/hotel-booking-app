@@ -8,12 +8,12 @@ export const About = () => {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
+      position:"absolute",
+      top: 40, left: 0, bottom: 0, right: 0 , overflowX: "hidden", 
       textAlign:'center',
-      alignItems:'center'
-      
     }}>
         {/* <Navbar /> */}
-      <div className="about-intro">
+      <div style={{width:"100%",textAlign:"center"}}>
         <h1>Welcome to Abide in me hotel</h1>
         <p>Your Home Away from Home</p>
       </div>

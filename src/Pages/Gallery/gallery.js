@@ -13,8 +13,22 @@ function Gallery() {
   }, [dispatch]);
 
   return (
-    <div className='about-container'>
-      <div className="about-intro">
+    <div
+    style={{
+      width: "100vw",
+    }}
+  >
+    {/* <Navbar /> */}
+    <div
+      style={{
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        // textAlign:'center',
+        alignItems: "center",
+      }}
+    >
         {/* <h1>Gallery</h1> */}
       </div>
       <div className="about-content">

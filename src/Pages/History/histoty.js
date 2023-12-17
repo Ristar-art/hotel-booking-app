@@ -25,7 +25,14 @@ const History = () => {
   }, []);
 
   return (
-    <div className="about-container">
+    <div style={{      
+      display: "flex",     
+      justifyContent: "center",
+      position: "absolute",    
+      left: 0,      
+      right: 0,
+      overflowX: "hidden",
+    }}>
       <div className="about-intro">
         <h1>History of your Rents </h1>
       </div>
