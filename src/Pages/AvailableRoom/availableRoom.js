@@ -29,8 +29,26 @@ function AvailableRooms() {
   };
 
   return (
-    <div className='container'>
-      <div className="room-list">
+    <div
+    style={{
+      width: "100vw",
+    }}
+  >
+    {/* <Navbar /> */}
+    <div
+      style={{
+        width: "100vw",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap:'wrap',
+        alignItems: "center",
+        position:"absolute",top: 40, left: 0, bottom: 0, right: 0 , overflowX: "hidden"
+      }}
+    >
+      <div style={{}}>
+
+      </div>
         {availableRooms.map((room, index) => {
           const totalPrice = numberOfDays * room.rentPerDay;
           localStorage.setItem('totalPrice', totalPrice); 

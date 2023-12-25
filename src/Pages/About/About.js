@@ -1,9 +1,19 @@
 import React from 'react';
 import './About.css';
+import { Navbar } from '../../Components/Navbar/Navbar';
 export const About = () => {
   return (
-    <div className="about-container">
-      <div className="about-intro">
+    <div   style={{
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      position:"absolute",
+      top: 40, left: 0, bottom: 0, right: 0 , overflowX: "hidden", 
+      textAlign:'center',
+    }}>
+        {/* <Navbar /> */}
+      <div style={{width:"100%",textAlign:"center"}}>
         <h1>Welcome to Abide in me hotel</h1>
         <p>Your Home Away from Home</p>
       </div>
@@ -35,13 +45,13 @@ export const About = () => {
             Indulge in our luxurious amenities, including a spa, fitness center, swimming pool,fine dining, free and unlimited wifi. We're committed to making your stay exceptional.
           </p>
         </section>
-        <section className="about-section">
+        {/* <section className="about-section">
           <h2>Dining</h2>
           <p>
             Experience culinary excellence at our on-site restaurants, where talented chefs create
             delectable dishes from around the world.
           </p>
-        </section>
+        </section> */}
         {/* <section className="about-section">
           <h2>Events and Meetings</h2>
           <p>
