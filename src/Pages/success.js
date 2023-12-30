@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./success.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, clearError, clearForm } from '../Components/SignUp/singUpSlice';
+import {
+  setLoading,
+  clearError,
+  clearForm,
+} from "../Components/SignUp/singUpSlice";
 
 const Success = () => {
   const dispatch = useDispatch();
@@ -9,16 +13,13 @@ const Success = () => {
   const roomNumber = localStorage.getItem("chosenRoom");
   const [user, setUser] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
-  const [loading, setLoading] = useState(false);
   const [historyCreated, setHistoryCreated] = useState(false);
+  const [createHistoryInProgress, setCreateHistoryInProgress] = useState(false);
+  const historyCreatedRef = useRef(false);
 
   useEffect(() => {
-    let isMounted = true;
-
     const fetchData = async () => {
       try {
-        setLoading(true);
-
         const roomResponse = await fetch(
           `http://localhost:8000/api/room/${roomNumber}`,
           {
@@ -35,90 +36,110 @@ const Success = () => {
         }
 
         const roomData = await roomResponse.json();
-
-        if (isMounted) {
-          setBookingDetails({
-            roomNumber: roomData.roomNumber,
-            roomType: roomData.roomType,
-            checkInDate: roomData.checkin,
-            checkOutDate: roomData.checkout,
-            totalPrice: roomData.price,
-            numberOfDays: roomData.numberOfDays,
-          });
-        }
+        setBookingDetails({
+          roomNumber: roomData.roomNumber,
+          roomType: roomData.roomType,
+          checkInDate: roomData.checkin,
+          checkOutDate: roomData.checkout,
+          totalPrice: roomData.price,
+          numberOfDays: roomData.numberOfDays,
+        });
       } catch (error) {
         console.error("Error fetching booking details:", error);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
       }
     };
 
     fetchData();
   }, [accessToken, roomNumber]);
 
-  useEffect(() => {
-    const createHistoryEntry = async () => {
-      try {
-        if (bookingDetails.roomNumber && !historyCreated) {
-          console.log("bookingDetails request is: ", bookingDetails);
-          const userProfileResponse = await fetch(
-            "http://localhost:8000/api/user-profile",
+  const createHistoryEntry = async () => {
+    try {
+      const userProfileResponse = await fetch(
+        "http://localhost:8000/api/user-profile",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (userProfileResponse.ok) {
+        const userData = await userProfileResponse.json();
+        setUser(userData.email);
+
+        const history = {
+          email: userData.email,
+          roomNumber: bookingDetails.roomNumber,
+          roomType: bookingDetails.roomType,
+          checkInDate: new Date(bookingDetails.checkInDate),
+          checkOutDate: new Date(bookingDetails.checkOutDate),
+          price: bookingDetails.totalPrice,
+          numberOfDays: bookingDetails.numberOfDays,
+        };
+
+        if (!history.price || !history.numberOfDays) {
+          console.error("Missing required fields for history entry");
+          return; // or handle the error as needed
+        }
+
+        // Check if history entry creation is in progress
+        if (createHistoryInProgress) {
+          return;
+        }
+
+        // Set createHistoryInProgress to true to prevent multiple calls
+        setCreateHistoryInProgress(true);
+
+        // Check if history entry has already been created
+        if (!historyCreated) {
+          console.log("History entry created this time");
+
+          const createHistoryResponse = await fetch(
+            "http://localhost:8000/api/createHistory",
             {
-              method: "GET",
+              method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
               },
+              body: JSON.stringify(history),
             }
           );
 
-          if (userProfileResponse.ok) {
-            const userData = await userProfileResponse.json();
-            setUser(userData.email);
-
-            const historyData = {
-              email: userData.email,
-              roomNumber: bookingDetails.roomNumber,
-              roomType: bookingDetails.roomType,
-              checkInDate: bookingDetails.checkInDate,
-              checkOutDate: bookingDetails.checkOutDate,
-              price: bookingDetails.totalPrice,
-              numberOfDays: bookingDetails.numberOfDays,
-            };
-            console.log("the createHistoryResponse request is called");
-            const createHistoryResponse = await fetch(
-              "http://localhost:8000/api/createHistory",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(historyData),
-              }
-            );
-
-            if (!createHistoryResponse.ok) {
-              throw new Error("Failed to create history entry");
-            }
-
-            console.log("History entry created successfully");
+          if (createHistoryResponse.ok) {
+            console.log("Before historyCreated update:", historyCreated);
             setHistoryCreated(true);
-            dispatch(clearError());
-            dispatch(clearForm());
+            console.log("After historyCreated update:", historyCreated);
           } else {
-            setUser(null);
+            throw new Error("Failed to create history entry");
           }
         }
-      } catch (error) {
-        console.error("Error creating history entry:", error);
       }
-    };
+    } catch (error) {
+      console.error("Error creating history entry:", error);
+    } finally {
+      // Set createHistoryInProgress back to false after completion
+      setCreateHistoryInProgress(false);
+    }
+  };
 
-    createHistoryEntry();
-  }, [accessToken, bookingDetails, historyCreated]);
+  useEffect(() => {
+    try {
+      if (
+        bookingDetails.roomNumber &&
+        bookingDetails.roomType &&
+        !historyCreated &&
+        !createHistoryInProgress
+      ) {
+        createHistoryEntry();
+        setHistoryCreated(true)
+      }
+    } catch (error) {
+      console.error("Error creating history entry:", error);
+    }
+  }, [bookingDetails, accessToken, historyCreated, createHistoryInProgress]);
 
   return (
     <div className="display">
@@ -131,10 +152,12 @@ const Success = () => {
           <strong>Room Type:</strong> {bookingDetails.roomType}
         </p>
         <p>
-          <strong>Check-in Date:</strong> {bookingDetails.checkInDate}
+          <strong>Check-in Date:</strong>{" "}
+          {new Date(bookingDetails.checkInDate).toLocaleDateString()}
         </p>
         <p>
-          <strong>Check-out Date:</strong> {bookingDetails.checkOutDate}
+          <strong>Check-out Date:</strong>{" "}
+          {new Date(bookingDetails.checkOutDate).toLocaleDateString()}
         </p>
         <p>
           <strong>Total Price:</strong> {bookingDetails.totalPrice}

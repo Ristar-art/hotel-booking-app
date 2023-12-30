@@ -198,7 +198,7 @@ app.put("/api/update-room-dates/:roomNumber",authenticateToken, async (req, res)
       { room: roomNumber },
       {
         checkin: checkInDate,
-        checkout: checkOutDate,
+        checkout:checkOutDate,
         isBooked: isbooked,
         price: totalPriceParsed, // Use the parsed value here
         numberOfDays: numberOfDays, 

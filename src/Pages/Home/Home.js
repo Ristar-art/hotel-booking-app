@@ -74,11 +74,11 @@ export const Home = () => {
 
   const handleSearchRooms = () => {
     if (checkInDate && checkOutDate) {
-      const { state } = location;
+      console.log('isLoggedIn is ',isLoggedIn)
       if (isLoggedIn) {
         navigate("/available-rooms");
       } else {
-        console.log("Access Token not found in state");
+        navigate("/login");
       }
     } else {
       console.log("Please select both check-in and check-out dates.");

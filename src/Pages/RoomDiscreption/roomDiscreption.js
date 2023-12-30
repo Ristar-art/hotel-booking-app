@@ -158,7 +158,7 @@ const RoomDescriptionPage = () => {
               }}
             >
               <p style={{ marginRight: 5 }}>Room type:</p>
-              <h3>{room.roomType}</h3>
+              <p>{room.roomType}</p>
             </div>
             <div
               style={{
@@ -167,7 +167,7 @@ const RoomDescriptionPage = () => {
                 alignItems: "center",
               }}
             >
-              <p style={{ marginRight: 5 }}>Room Discription:</p>
+              <p style={{ marginRight: 5 }}>Discription:</p>
               <p>{room.description}</p>
             </div>
           </div>
