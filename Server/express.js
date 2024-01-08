@@ -72,7 +72,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.get("/api/all-rooms", async (req, res) => {
-  console.log("The /api/all-rooms API is called");
+ 
   try {
     const allRooms = await Rooms.find({});
 
@@ -259,7 +259,7 @@ app.get("/api/userHistory", authenticateToken, async (req, res) => {
   try {
     const userEmail = req.user.email; // Assuming the email is available in the req.user object
      
-     console.log('userEmail is: ',userEmail)
+    
     // Use the userHistory model to find history records by email
     const history = await userHistory.find({ email: userEmail });
     res.json(history);
@@ -271,7 +271,7 @@ app.get("/api/userHistory", authenticateToken, async (req, res) => {
 
  
 app.post("/api/createHistory", async (req, res) => {
-  console.log('This API is being called');
+  
   try {
     const { roomNumber, roomType, checkInDate, checkOutDate, price, numberOfDays, email } = req.body;
 
