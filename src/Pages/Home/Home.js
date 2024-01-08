@@ -16,6 +16,7 @@ export const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const userAccessToken = localStorage.getItem("accessToken");
+    
     setIsLoggedIn(!!userAccessToken);
 
     const storedCheckInDate = localStorage.getItem("checkInDate");
@@ -58,7 +59,8 @@ export const Home = () => {
     setCheckInDate(newCheckInDate);
 
     localStorage.setItem("checkInDate", newCheckInDate);
-     };
+    
+  };
 
   const handleCheckOutDateChange = (event) => {
     const newCheckOutDate = new Date(event.target.value)
@@ -67,18 +69,19 @@ export const Home = () => {
     setCheckOutDate(newCheckOutDate);
 
     localStorage.setItem("checkOutDate", newCheckOutDate);
-     };
+    
+  };
 
   const handleSearchRooms = () => {
     if (checkInDate && checkOutDate) {
-      const { state } = location;
+      
       if (isLoggedIn) {
         navigate("/available-rooms");
       } else {
-        console.log("Access Token not found in state");
+        navigate("/login");
       }
     } else {
-      console.log("Please select both check-in and check-out dates.");
+      alert("Please select both check-in and check-out dates.");
     }
   };
 
