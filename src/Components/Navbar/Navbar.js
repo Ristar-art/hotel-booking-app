@@ -24,7 +24,7 @@ const useAuth = () => {
         const userData = await response.json();
         setUser(userData);
         setEmail(userData.email);
-        console.log(userData.email);
+        
         dispatch(setLoading(false)); // Set isLoading to false when data is loaded
       } else {
         setUser(null);
