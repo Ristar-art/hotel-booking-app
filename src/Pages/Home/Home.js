@@ -16,7 +16,6 @@ export const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const userAccessToken = localStorage.getItem("accessToken");
-    console.log("userAccessToken is: ", userAccessToken);
     setIsLoggedIn(!!userAccessToken);
 
     const storedCheckInDate = localStorage.getItem("checkInDate");
@@ -59,8 +58,7 @@ export const Home = () => {
     setCheckInDate(newCheckInDate);
 
     localStorage.setItem("checkInDate", newCheckInDate);
-    console.log("newCheckInDate is: ", newCheckInDate);
-  };
+     };
 
   const handleCheckOutDateChange = (event) => {
     const newCheckOutDate = new Date(event.target.value)
@@ -69,8 +67,7 @@ export const Home = () => {
     setCheckOutDate(newCheckOutDate);
 
     localStorage.setItem("checkOutDate", newCheckOutDate);
-    console.log("newCheckOutDate is: ", newCheckOutDate);
-  };
+     };
 
   const handleSearchRooms = () => {
     if (checkInDate && checkOutDate) {

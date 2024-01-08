@@ -29,7 +29,7 @@ export function Login() {
 
       if (response.ok) {
         const token = await response.json();
-        console.log(token);
+        
         localStorage.setItem("accessToken", token.accessToken);
 
         alert("Login successful");

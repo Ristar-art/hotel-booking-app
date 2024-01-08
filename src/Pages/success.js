@@ -62,7 +62,6 @@ const Success = () => {
     const createHistoryEntry = async () => {
       try {
         if (bookingDetails.roomNumber && !historyCreated) {
-          console.log("bookingDetails request is: ", bookingDetails);
           const userProfileResponse = await fetch(
             "http://localhost:8000/api/user-profile",
             {
@@ -87,8 +86,7 @@ const Success = () => {
               price: bookingDetails.totalPrice,
               numberOfDays: bookingDetails.numberOfDays,
             };
-            console.log("the createHistoryResponse request is called");
-            const createHistoryResponse = await fetch(
+           const createHistoryResponse = await fetch(
               "http://localhost:8000/api/createHistory",
               {
                 method: "POST",
@@ -104,7 +102,6 @@ const Success = () => {
               throw new Error("Failed to create history entry");
             }
 
-            console.log("History entry created successfully");
             setHistoryCreated(true);
             dispatch(clearError());
             dispatch(clearForm());

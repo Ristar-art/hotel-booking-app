@@ -51,7 +51,6 @@ function SignUp() {
       });
       
       if (response.ok) {
-        console.log('User registered successfully');
         dispatch(setLoading(false));
         dispatch(clearError());
         dispatch(clearForm());

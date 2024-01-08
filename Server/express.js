@@ -115,7 +115,7 @@ app.get("/api/booked-rooms", async (req, res) => {
 });
 
 app.get("/api/available-rooms",authenticateToken, async (req, res) => {
-  console.log("the available room api is beig called");
+ 
   try {
     const availableRooms = await Rooms.find(
       { isBooked: false },
@@ -142,7 +142,7 @@ app.get("/api/room/:roomNumber",authenticateToken, async (req, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
-  console.log("this is being called");
+
   const { roomNumber } = req.params;
 
   try {
@@ -171,7 +171,7 @@ app.get("/api/room/:roomNumber",authenticateToken, async (req, res) => {
 app.post("/api/rooms", async (req, res) => {
   try {
     const newRoom = req.body;
-    console.log(newRoom); // Make sure the newRoom object is being received properly
+   
     const createdRoom = await Rooms.create(newRoom);
     return res.status(201).json(createdRoom);
   } catch (error) {
@@ -188,7 +188,7 @@ app.put("/api/update-room-dates/:roomNumber",authenticateToken, async (req, res)
   const { roomNumber } = req.params;
   const { checkInDate, checkOutDate, isbooked, totalPrice, numberOfDays } =
     req.body;
-  console.log("totalPice is: ", totalPrice);
+  
 
   try {
     const totalPriceParsed = parseFloat(totalPrice); // Parse the totalPrice to a float
@@ -204,7 +204,7 @@ app.put("/api/update-room-dates/:roomNumber",authenticateToken, async (req, res)
       },
       { new: true }
     );
-    console.log("room.price is: ", room.price);
+   
     if (!room) {
       return res.status(404).json({ message: "Room not found" });
     }
@@ -221,7 +221,7 @@ app.get("/api/user-profile", authenticateToken, async (req, res) => {
   try {
     // You can access the user's email from the token payload provided by the authenticateToken middleware
     const userEmail = req.user.email;
-     console.log(userEmail)
+   
     // Assuming your user schema has fields like uid, name, and email
     const userProfile = await User.findOne({ email: userEmail });
 
@@ -258,7 +258,7 @@ app.get("/api/userHistory", authenticateToken, async (req, res) => {
   try {
     const userEmail = req.user.email; // Assuming the email is available in the req.user object
      
-     console.log('userEmail is: ',userEmail)
+     
     // Use the userHistory model to find history records by email
     const history = await userHistory.find({ email: userEmail });
     res.json(history);
@@ -270,7 +270,7 @@ app.get("/api/userHistory", authenticateToken, async (req, res) => {
 
  
 app.post("/api/createHistory", async (req, res) => {
-  console.log('This API is being called');
+  
   try {
     const { roomNumber, roomType, checkInDate, checkOutDate, price, numberOfDays, email } = req.body;
 
@@ -308,9 +308,7 @@ app.post("/api/create-checkout-session",authenticateToken, async (req, res) => {
       if (!room) {
         throw new Error(`Room with number ${roomNumber} not found.`);
       }
-      console.log("room.price is: ", room.price);
-      console.log("price is :", room.price * 100);
-
+      
       return {
         priceInCents: room.price * 100,
         roomNumber: room.room,

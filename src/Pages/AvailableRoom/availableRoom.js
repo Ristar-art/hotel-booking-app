@@ -10,7 +10,7 @@ function AvailableRooms() {
   const availableRooms = useSelector(state => state.availableRooms);
   const dispatch = useDispatch(); 
   const accessToken = localStorage.getItem('accessToken'); 
-  console.log('access token is: ', accessToken)
+  
   const checkInDate = new Date(localStorage.getItem('checkInDate'));
   const checkOutDate = new Date(localStorage.getItem('checkOutDate')); 
   
@@ -18,7 +18,7 @@ function AvailableRooms() {
   localStorage.setItem('timeDifference',timeDifference)
   const numberOfDays = timeDifference / (1000 * 3600 * 24);
   localStorage.setItem('numberOfDays',numberOfDays)
-  console.log('numberOfdays is ',numberOfDays)
+  
   useEffect(() => {
    
     dispatch(fetchAvailableRooms(accessToken));
