@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     // Check if the access token is present in local storage
     const token = localStorage.getItem('accessToken');
-    console.log('tokent is: ', token)
+   
     if (token) {
       dispatch(setIsLoggedIn(true));
     }

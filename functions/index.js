@@ -19,7 +19,6 @@ app.use(morgan("tiny"));
 app.use(decodeIDToken);
 
 
-// console.log("functions.config():", functions.config());
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

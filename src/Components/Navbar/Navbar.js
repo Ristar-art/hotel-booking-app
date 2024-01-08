@@ -9,7 +9,7 @@ const useAuth = () => {
   const isLoading = useSelector((state) => state.Login.isLoading); // Get isLoading from Redux store
   const dispatch = useDispatch();
   const accessToken = localStorage.getItem("accessToken");
-  // console.log('accessToken is: ', accessToken)
+ 
   const fetchUserData = async (accessToken) => {
     try {
       const response = await fetch("http://localhost:8000/api/user-profile", {
@@ -24,7 +24,7 @@ const useAuth = () => {
         const userData = await response.json();
         setUser(userData);
         setEmail(userData.email);
-        console.log(userData.email);
+        
         dispatch(setLoading(false)); // Set isLoading to false when data is loaded
       } else {
         setUser(null);
@@ -40,8 +40,7 @@ const useAuth = () => {
   };
 
   useEffect(() => {
-    // const accessToken = localStorage.getItem('accessToken');
-    console.log(email);
+ 
     if (accessToken) {
       if (isLoading) {
         // Check if isLoading is true

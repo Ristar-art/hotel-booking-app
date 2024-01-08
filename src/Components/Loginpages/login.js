@@ -29,9 +29,9 @@ export function Login() {
 
       if (response.ok) {
         const token = await response.json();
-        console.log(token);
+       
         localStorage.setItem("accessToken", token.accessToken);
-        console.log( "token.accessToken is : ",token.accessToken)
+      
         alert("Login successful");
         navigate("/");
       } else {
