@@ -32,15 +32,11 @@ export default function Cancel() {
   const isbooked = false;
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      // Perform logout actions or other appropriate actions if the user is not logged in
-      // Example: Redirect the user to the login page or display an appropriate message
-      console.log('User is not logged in.');
-      return;
-    }
+    
+    
 
     const handleCancel = () => {
-      console.log('user sent a request to the backend');
+     
       fetch(`http://localhost:8000/api/update-room-dates/${roomNumber}`, {
         method: 'PUT',
         headers: {
@@ -51,7 +47,7 @@ export default function Cancel() {
       })
         .then(response => response.json())
         .then(data => {
-          console.log('Room dates updated:', data.message);
+          
         })
         .catch(error => {
           console.error('Error updating room dates:', error);

@@ -16,7 +16,7 @@ const History = () => {
         });
         const data = await response.json();
 
-        console.log('data is: ', data);
+       
         setHistory(data);
       } catch (error) {
         console.error('Error fetching history:', error);

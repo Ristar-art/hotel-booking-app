@@ -94,7 +94,7 @@ const Success = () => {
 
         // Check if history entry has already been created
         if (!historyCreated) {
-          console.log("History entry created this time");
+         
 
           const createHistoryResponse = await fetch(
             "http://localhost:8000/api/createHistory",
@@ -109,9 +109,9 @@ const Success = () => {
           );
 
           if (createHistoryResponse.ok) {
-            console.log("Before historyCreated update:", historyCreated);
+           
             setHistoryCreated(true);
-            console.log("After historyCreated update:", historyCreated);
+            
           } else {
             throw new Error("Failed to create history entry");
           }

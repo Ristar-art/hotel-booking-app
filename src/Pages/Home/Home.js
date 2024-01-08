@@ -16,7 +16,7 @@ export const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const userAccessToken = localStorage.getItem("accessToken");
-    console.log("userAccessToken is: ", userAccessToken);
+    
     setIsLoggedIn(!!userAccessToken);
 
     const storedCheckInDate = localStorage.getItem("checkInDate");
@@ -59,7 +59,7 @@ export const Home = () => {
     setCheckInDate(newCheckInDate);
 
     localStorage.setItem("checkInDate", newCheckInDate);
-    console.log("newCheckInDate is: ", newCheckInDate);
+    
   };
 
   const handleCheckOutDateChange = (event) => {
@@ -69,19 +69,19 @@ export const Home = () => {
     setCheckOutDate(newCheckOutDate);
 
     localStorage.setItem("checkOutDate", newCheckOutDate);
-    console.log("newCheckOutDate is: ", newCheckOutDate);
+    
   };
 
   const handleSearchRooms = () => {
     if (checkInDate && checkOutDate) {
-      console.log('isLoggedIn is ',isLoggedIn)
+      
       if (isLoggedIn) {
         navigate("/available-rooms");
       } else {
         navigate("/login");
       }
     } else {
-      console.log("Please select both check-in and check-out dates.");
+      alert("Please select both check-in and check-out dates.");
     }
   };
 

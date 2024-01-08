@@ -64,7 +64,7 @@ const RoomDescriptionPage = () => {
         throw new Error("Failed to update room dates");
       }
 
-      console.log("Room dates updated successfully");
+     
 
       // Then, create a checkout session
       const items = [
