@@ -5,14 +5,14 @@ export const fetchAllRooms = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      console.log('Fetching all rooms...');
+
       const response = await fetch('http://localhost:8000/api/all-rooms', {
         headers: {
           'Content-Type': 'application/json',
           // 'Authorization': `Bearer ${accessToken}`
         }
       });
-       console.log('response is: ',response)
+      
       if (!response.ok) {
         // Handle non-successful response (e.g., status code 404 or 500)
         if (response.status === 404) {
@@ -25,7 +25,7 @@ export const fetchAllRooms = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log('Pictures:', data.pictures);
+    
       return data.pictures;
     } catch (error) {
       console.error('Error fetching all rooms:', error);

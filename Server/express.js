@@ -62,7 +62,7 @@ app.post("/api/login", async (req, res) => {
       { userId: user._id, email: user.email },
       process.env.ACCESS_TOKEN_SECRET
     );
-    console.log(accessToken)
+   
     return res.json({ accessToken: accessToken, user: true });
     
   } catch (err) {
@@ -71,7 +71,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.get("/api/all-rooms", async (req, res) => {
-  console.log("The /api/all-rooms API is called");
+  
   try {
     const allRooms = await Rooms.find({});
 
@@ -121,13 +121,13 @@ app.get("/api/available-rooms",authenticateToken, async (req, res) => {
       { isBooked: false },
       "room rentperday RoomPhoto"
     );
-    console.log("availableRooms: is ", availableRooms);
+   
     const roomInfo = availableRooms.map((room) => ({
       roomNumber: room.room,
       rentPerDay: room.rentperday,
       roomPhoto: room.RoomPhoto,
     }));
-    console.log("roomInfo is: ", roomInfo);
+   
     res.json({
       message: "Available rooms",
       availableRooms: roomInfo,

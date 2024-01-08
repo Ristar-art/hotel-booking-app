@@ -12,7 +12,7 @@ export const fetchAvailableRooms = createAsyncThunk(
       }
     });
     const data = await response.json();
-    console.log('availableRooms: ',data.availableRooms);
+   
     return data.availableRooms;
   }
 );
