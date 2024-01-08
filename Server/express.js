@@ -18,7 +18,7 @@ const jwt = require('jsonwebtoken')
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // })
-mongoose.connect('mongodb+srv://boiketlo:wlAng9qDc0ZoIA8C@cluster0.jvdtm2c.mongodb.net/hotel')
+mongoose.connect('mongodb://127.0.0.1:27017/hotel')
 //mongoose.connect("mongodb://127.0.0.1:27017/hotel");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
